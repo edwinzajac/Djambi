@@ -1,6 +1,9 @@
 import os
 
 class Piece:
+
+    #piecesDirectory = "./images/pieces"
+    piecesDirectory = "./assets/pieces"
     
     def __init__(self, name, color, value, texture = None, texture_rect = None):
         self.name = name
@@ -15,7 +18,7 @@ class Piece:
         
     def set_textures(self):
         self.texture = os.path.join(
-            f'Djambi//images//pieces//{self.color}//{self.name}.png'
+            f'{self.piecesDirectory}/{self.color}/{self.name.lower()}.svg'
         )
         
     def add_moves(self,move):

@@ -8,7 +8,7 @@ class Board:
         self.squares = []
         
         self._create()
-        self._add_pieces('blanc')
+        self._add_pieces('red')
         self._add_pieces('yellow')
         
     def _create(self):
@@ -19,7 +19,7 @@ class Board:
                 self.squares[row][col] = Square(row, col)
             
     def _add_pieces(self,color):
-        var = "blanc" == color
+        var = "red" == color
         
         #col 1
         col = 0 if var else 8

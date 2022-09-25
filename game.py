@@ -24,9 +24,9 @@ class Game:
                 pygame.draw.rect(surface, color, rect)
                 
                 ## Dessin du trône
-                path_trone = "Djambi//images//bg//Trone.png"
+                path_trone = "./assets/images/bg/Trone.png"
                 img = pygame.image.load(path_trone)
-                img = pygame.transform.scale(img,(1.2*SQSIZE,1.2*SQSIZE))
+                img = pygame.transform.smoothscale(img,(1.2*SQSIZE,1.2*SQSIZE))
                 img_center = HEIGHT//2, WIDTH//2  
                 img_rect = img.get_rect(center = img_center)
                 surface.blit(img,img_rect)
