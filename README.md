@@ -8,6 +8,12 @@
 <img src="./assets/pieces/green/assassin.svg">
 <img src="./assets/pieces/blue/assassin.svg">
 
+| Chief                                     | Assassin | Diplomat | Necromobile| Reporter                                     | militant | 
+|:------------------------------------------|:---------|:---------|:------------|:---------|:---------------------------------------------|
+| <img src="./assets/pieces/red/chief.svg"> | <img src="./assets/pieces/red/assassin.svg">|<img src="./assets/pieces/red/diplomat.svg">| <img src="./assets/pieces/red/necromobile.svg">| <img src="./assets/pieces/red/reporter.svg">|  <img src="./assets/pieces/red/militant.svg">         | 
+
+
+
 ## Make Commands
 
 ### Run game
