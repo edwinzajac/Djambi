@@ -58,4 +58,19 @@ class Game:
                         img_center = col * SQSIZE + SQSIZE//2, row * SQSIZE + SQSIZE//2
                         piece.texture_rect = img.get_rect(center = img_center)
                         surface.blit(img,piece.texture_rect)
+                        
+    def show_moves(self,surface):
+        '''
+            Affiche les coups possibles en fonction de l'attribut "is_possible_move" de l'objet Square
+        '''
+        
+        for row in range(ROWS):
+            for col in range(COLS):
+                square = self.board.squares[row][col]
+                if square.is_possible_move:
+                    color = (0,0,0)
+                    circle_center = col * SQSIZE + SQSIZE//2, row * SQSIZE + SQSIZE//2
+                    disque = pygame.draw.circle(surface, color, circle_center, SQSIZE//10)
+                    
+                      
                     

@@ -1,5 +1,6 @@
 import sys
 import pygame
+import time
 
 from const import *
 from game import Game
@@ -8,7 +9,7 @@ class Main:
 
     def __init__(self):
         pygame.init()
-        self.screen = pygame.display.set_mode( (WIDTH, HEIGHT))
+        self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption('DJAMBI LES BONOBOS')
         self.game = Game()
 
@@ -29,6 +30,8 @@ class Main:
             
             game.show_pieces(screen)
             
+            game.show_moves(screen)
+            
             
             for event in pygame.event.get():
                 
@@ -39,11 +42,12 @@ class Main:
                     clicked_row = dragger.mouseY//SQSIZE
                     clicked_col = dragger.mouseX//SQSIZE
                 
-                    if board.squares[clicked_row][clicked_col].has_piece():
+                    if board.squares[clicked_row][clicked_col].has_real_piece():
                         piece = board.squares[clicked_row][clicked_col].piece
                         dragger.save_initial(event.pos)
                         dragger.drag_piece(piece)
-
+                        
+                        board.cal_moves(piece,clicked_row,clicked_col)
                     
                 #click release
                 elif event.type == pygame.MOUSEBUTTONUP:
@@ -65,6 +69,9 @@ class Main:
 
             
             pygame.display.update()
+            
+            time.sleep(0.01) #ralentit l'itération
+            
 
 main = Main()
 main.mainloop()
