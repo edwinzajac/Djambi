@@ -49,7 +49,6 @@ class Main:
                 elif event.type == pygame.MOUSEBUTTONUP:
                     dragger.undrag_piece()
 
-    
                 
                 #déplacement souris
                 elif event.type == pygame.MOUSEMOTION:
