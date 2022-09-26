@@ -41,12 +41,15 @@ class Main:
                     
                     clicked_row = dragger.mouseY//SQSIZE
                     clicked_col = dragger.mouseX//SQSIZE
+                    
+                    board.current_square_coord = (clicked_row,clicked_col)
                 
                     if board.squares[clicked_row][clicked_col].has_real_piece():
                         piece = board.squares[clicked_row][clicked_col].piece
                         dragger.save_initial(event.pos)
                         dragger.drag_piece(piece)
                         
+                        #Affiche coups 
                         board.cal_moves(piece,clicked_row,clicked_col)
                     
                 #click release

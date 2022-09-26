@@ -18,6 +18,7 @@ class Game:
         self.dragger = Dragger()
 
     
+   
     def show_bg(self,surface):
         '''
             Permet d'afficher le background (cases + trône)        
@@ -30,10 +31,13 @@ class Game:
                     color = (240,240,220)
                 else:
                     color = (120,120,90)
-                
+                    
+                if self.board.current_square_coord is not None and self.board.current_square_coord == (row,col): #on surligne la case cliquée        
+                    color = (255,160,160)
                 
                 rect = ( col*SQSIZE , row * SQSIZE , SQSIZE, SQSIZE )
                 pygame.draw.rect(surface, color, rect)
+                
                 
         ## Dessin du trône
         path_trone = "./assets/images/bg/Trone.png"

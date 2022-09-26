@@ -6,12 +6,13 @@ from player import Player
 
 class Board:
     
-    def __init__(self,player_list):
+    def __init__(self,player_list, current_square_coord = None):
         self.squares = []
         self.player_list = player_list  #liste des objets joueurs
         self.nb_joueurs = len(player_list)
         self._create()
         self._add_pieces()
+        self.current_square_coord = current_square_coord #pour garder en sauvegarde la dernière case cliquée sous forme (row, col)
         
     def cal_moves(self,piece,row,col):
         
