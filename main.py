@@ -21,6 +21,8 @@ class Main:
         
         if dragger.dragging:
             dragger.update_blit(screen)
+            
+        self.test = False
         
         while True:
             game.show_bg(screen)
@@ -41,6 +43,12 @@ class Main:
                         piece = board.squares[clicked_row][clicked_col].piece
                         dragger.save_initial(event.pos)
                         dragger.drag_piece(piece)
+
+                    
+                #click release
+                elif event.type == pygame.MOUSEBUTTONUP:
+                    dragger.undrag_piece()
+
     
                 
                 #déplacement souris
@@ -51,9 +59,6 @@ class Main:
                         game.show_pieces(screen)
                         dragger.update_blit(screen)
                 
-                #click release
-                elif event.type == pygame.MOUSEBUTTONUP:
-                    dragger.undrag_piece()
                 
                 if event.type == pygame.QUIT:
                     pygame.quit()
