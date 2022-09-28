@@ -1,0 +1,32 @@
+{
+    "pieces": {
+        "red": {
+            "fillColor": "#e74c3c",
+            "drawColor": "#7b190f"
+        },
+        "yellow": {
+            "fillColor": "#f1c40f",
+            "drawColor": "#614f06"
+        },
+        "green": {
+            "fillColor": "#2ecc71",
+            "drawColor": "#124f2c"
+        },
+        "blue": {
+            "fillColor": "#3498db",
+            "drawColor": "#124364"
+        },
+        "black": {
+            "fillColor": "#1e272e",
+            "drawColor": "#d2dae2"
+        },
+        "orange": {
+            "fillColor": "#e67e22",
+            "drawColor": "#64350b"
+        },
+        "purple": {
+            "fillColor": "#8e44ad",
+            "drawColor": "#34193f"
+        }
+    }
+}

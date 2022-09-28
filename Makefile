@@ -7,5 +7,5 @@ requirements:
 	$(py) -m pip install -r requirements.txt
 
 colorize-pieces:
-	$(py) assetsCreation/generateColorPieces.py assets/pieces
+	$(py) assetsCreation/generateColorPieces.py assets/pieces config/colors.json
 

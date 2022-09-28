@@ -2,16 +2,20 @@
 This script generates the svgs corresponding to the colored pieces of the game.
 
 Usage:
-python generateColorPieces.py piecesDir 
+python generateColorPieces.py piecesDir colorsFile.json
 
 :piecesDir: the pieces folder containing a folder for each color, 'blank' being
 the one containing all non formated svgs with {fillColor} and 
 {drawColor} to replace
 
+:colorsFile.json: json file containing the key 'pieces' for the colors
+dictionnary
+
 """
 
 import logging
 import sys
+import json
 from os import listdir, getcwd, mkdir
 from os.path import isfile, join
 
@@ -20,25 +24,6 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 ## VARIABLES
-colorsDict = {
-    #don't put 'blank' key
-    "red": {
-        "fillColor": "#e74c3c",
-        "drawColor": "#7b190f"
-        },
-    "yellow": {
-        "fillColor": "#f1c40f",
-        "drawColor": "#614f06"
-        },
-    "green": {
-        "fillColor": "#2ecc71",
-        "drawColor": "#124f2c"
-        },
-    "blue": {
-        "fillColor": "#3498db",
-        "drawColor": "#124364"
-        }
-}
 
 def getNamesOfFiles(directory):
     """Return the list of the files in the directory 
@@ -80,11 +65,11 @@ def colorizeSVGs(piecesDir,colorsDict):
         for f in svgToColorize:
             with open(join(blankPiecesDir,f),"r") as svg:
                 dataSvg = svg.read()
+            coloredSvg = dataSvg.format(
+                    **colorsDict[color]
+                )
             with open(join(colorDir,f),"w") as svg:
-                svg.write(dataSvg.format(
-                    fillColor=colorsDict[color]["fillColor"],
-                    drawColor=colorsDict[color]["drawColor"]
-                ))
+                svg.write(coloredSvg)
                 logger.debug(f"{svg.name} saved")
 
 class InputError(Exception):
@@ -100,11 +85,15 @@ class InputError(Exception):
         self.message = message
 
 if __name__ == "__main__":
-    if len(sys.argv)!=2:
-        message = f"Usage: {sys.argv[0]} piecesDir"
+    if len(sys.argv)!=3:
+        message = f"Usage: {sys.argv[0]} piecesDir colors.json"
         raise InputError(sys.argv,message)
     #BASE_DIR = getcwd() 
     #assetsDir = join(BASE_DIR,"assets")
     #piecesDir = join(assetsDir,"pieces")
+    
     piecesDir = sys.argv[1]
-    colorizeSVGs(piecesDir,colorsDict)
+    colorsJsonFile = sys.argv[2]
+    with open(colorsJsonFile,"r") as colorsJson:
+        colorsDict = json.load(colorsJson)
+        colorizeSVGs(piecesDir,colorsDict["pieces"])
