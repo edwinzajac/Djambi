@@ -1,6 +1,11 @@
+from itertools import product
+import logging
 from config.const import *
 from .piece import *
 from .square import Square
+
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 class Board:
     
@@ -158,56 +163,77 @@ class Board:
     def cal_moves1(self, piece, row, col):
         
         '''
-            Calculate the possible moves for the first step of the turn (considering only the movement of the piece and not their effects)
+            Renvoie la liste des mouvements possibles en étoile ie dans toutes les directions
         '''
         
         #Reset des possible moves
         self.reinitialise_moves()
         
         #Calcul des nouveaux possible moves
-        print( f"Calculation of the possible moves (1st step) of the {piece.color} piece '{piece.name}' at ({row},{col}) ..." )
+        logger.info(f"possible moves computation: ({piece.color},{piece.name}) @ ({row},{col})")
         
-        k = 2 if piece.name == 'Militant' else 9 # Seul le militant a une portée de 2 cases
+        for pos in self.possible_moves(piece,(row,col)):
+            self.squares[pos[0]][pos[1]].is_possible_move = True 
+
+    def possible_moves(self, piece, pos):
+        """Return the list of possible_moves considering the current board
+        with pieceName at the selected position
+
+        :piece: Piece instance 
+        :pos: coordinates of the position 
+        :returns: the list of the coordinates of possible moves 
+
+        """
+        listOfPossibleMoves = []
+        #TODO Put range as an attribute for each piece Class
+        limitedRange = (piece.name=="Militant")
+        if limitedRange:
+            maxRange = 2
+        else:
+            maxRange = ROWS
+
+        for (x,y) in product([-1,0,1],[-1,0,1]):  # pour toutes les directions d'espace
+            if x==0 and y==0:
+                continue
+            k_i = 1
+            new_pos = pos[0]+x, pos[1]+y
             
-        dir = [-1,0,1]
-        
-        for x in dir:  # pour toutes les directions d'espace
-            for y in dir:
-                if x != 0 or y != 0:
-                    k_i = 1
-                    new_row = row + x
-                    new_col = col + y
-                    
-                    while k_i <= k and Square.in_board(new_row,new_col): # on va dans la direction souhaitée tant qu'on reste sur le board
+            #While in range and on board
+            while k_i <= maxRange and Square.in_board(new_pos[0],new_pos[1]): 
+                
+                square = self.squares[new_pos[0]][new_pos[1]]
+
+                if self.availableDestination(square,piece):
+                    listOfPossibleMoves.append(new_pos)
+                
+                #Stop if it encounters a piece
+                if square.has_piece():
+                    k_i = maxRange + 1 
                         
-                        square = self.squares[new_row][new_col]
-                        
-                        if square.has_piece():
-                            
-                            if square.has_rival_piece(piece) and not(square.has_corpse()) and piece.name != "Reporter" and piece.name != "Necromobile": #Si la pièce contenue n'est pas un rocher et qu'il s'agit d'une pièce rivale, et qu'en plus la pièce déplacée n'est ni un reporter ni une nécromobile, il est possible d'aller sur cette case
-                            
-                                self.squares[new_row][new_col].is_possible_move = True
-                                
-                            if square.has_corpse() and piece.name == "Necromobile":
-                                
-                                self.squares[new_row][new_col].is_possible_move = True
-                                
-                            k_i = k + 1 #dès qu'on rencontre une pièce, on arrête la boucle
-                                
-                                
-                        else:
-                            
-                            self.squares[new_row][new_col].is_possible_move = True
-                            
-                            new_row += x
-                            new_col += y
-                                
-                            k_i += 1
-                            
-        # Only the Chief is allowed to go to the center
-        if piece.name != 'Chief':
-            self.squares[4][4].is_possible_move = False 
-        
+                new_pos = new_pos[0]+x, new_pos[1]+y
+                k_i += 1
+        logger.debug(f"possible_moves({piece},{pos})={listOfPossibleMoves}")
+        return listOfPossibleMoves
+
+    def availableDestination(self,square,piece):
+        """Return if pos is a valid destination for piece
+
+        :square: Square instance
+        :piece: Piece instance 
+        :returns: bool 
+
+        """
+        if square.row==ROWS//2 and square.col==ROWS//2:
+            return piece.name == "Chief"
+        elif square.has_piece():
+            if piece.name == "Reporter":
+                return False 
+            elif piece.name == "Necromobile":
+                return square.has_corpse()
+            else:
+                return square.has_rival_piece(piece) 
+        else:
+            return True                         
     
     def cal_moves2(self):
         '''
