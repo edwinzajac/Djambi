@@ -2,8 +2,8 @@ import pygame
 
 from config.const import *
 from board.board import Board
-from dragger import Dragger
-from player import Player
+from .dragger import Dragger
+from .player import Player
 
 class Game:
 

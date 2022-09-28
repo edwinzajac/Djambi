@@ -3,7 +3,7 @@ import pygame
 import time
 
 from config.const import *
-from game import Game
+from gameplay.game import Game
 
 class Main:
 
