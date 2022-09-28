@@ -144,7 +144,7 @@ class Board:
             color3 = self.player_list[2].color
             color4 = self.player_list[3].color
             
-            ## Ajout des pièces des colonnes 1 et 9
+            ## Add pieces on colums 1 et 9
             for col in [0,8]:
                 for row in [0,8]: 
                     
@@ -157,13 +157,13 @@ class Board:
                     else:
                         color = color4
                          
-                    self.squares[row][col] = Square(row,col,Chief( color, (row,col) ) ) #row = 0 or 8
+                    self.squares[row][col] = Square(row,col,Chief( color, (row,col) ) ) # row = 0 or 8
                     
-                    self.squares[abs(row-1)][col] = Square(abs(row-1),col,Reporter( color, (abs(row-1),col) ) ) #row 1 or 7
+                    self.squares[abs(row-1)][col] = Square(abs(row-1),col,Reporter( color, (abs(row-1),col) ) ) # row 1 or 7
                     
-                    self.squares[abs(row-2)][col] = Square(abs(row-2),col,Militant( color, (abs(row-2),col) ) ) #row = 2 or 6
+                    self.squares[abs(row-2)][col] = Square(abs(row-2),col,Militant( color, (abs(row-2),col) ) ) # row = 2 or 6
          
-        ## Ajout des pièces des colonnes 2 et 8
+        ## Add pieces on colums 2 et 8
             for col in [1,7]:
                 for row in [0,8]: 
                     
@@ -176,13 +176,13 @@ class Board:
                     else:
                         color = color4
 
-                    self.squares[row][col] = Square(row,col,Assassin( color, (row,col) ) ) #row = 0 or 8
+                    self.squares[row][col] = Square(row,col,Assassin( color, (row,col) ) ) # row = 0 or 8
                     
-                    self.squares[abs(row-1)][col] = Square(abs(row-1),col,Diplomat( color, (abs(row-1),col) ) ) #row 1 or 7
+                    self.squares[abs(row-1)][col] = Square(abs(row-1),col,Diplomat( color, (abs(row-1),col) ) ) # row 1 or 7
                     
-                    self.squares[abs(row-2)][col] = Square(abs(row-2),col,Militant( color, (abs(row-2),col) ) ) #row = 2 or 6
+                    self.squares[abs(row-2)][col] = Square(abs(row-2),col,Militant( color, (abs(row-2),col) ) ) # row = 2 or 6
         
-        ## Ajout des pièces des colonnes 3 et 7
+        ## Add pieces on colums 3 et 7
             for col in [2,6]:
                 for row in [0,8]:
                     
@@ -195,11 +195,11 @@ class Board:
                     else:
                         color = color4
 
-                    self.squares[row][col] = Square(row,col,Militant( color, (row,col) ) ) #row = 0 or 8
+                    self.squares[row][col] = Square(row,col,Militant( color, (row,col) ) ) # row = 0 or 8
                     
-                    self.squares[abs(row-1)][col] = Square(abs(row-1),col,Militant( color, (abs(row-1),col) ) ) #row 1 or 7
+                    self.squares[abs(row-1)][col] = Square(abs(row-1),col,Militant( color, (abs(row-1),col) ) ) # row 1 or 7
                     
-                    self.squares[abs(row-2)][col] = Square(abs(row-2),col,Necromobile( color, (abs(row-2),col) ) ) #row = 2 or 6
+                    self.squares[abs(row-2)][col] = Square(abs(row-2),col,Necromobile( color, (abs(row-2),col) ) ) # row = 2 or 6
 
             self.squares[5][5] = Square(5,5,Rock())
             self.squares[1][5] = Square(1,5,Rock())
@@ -212,14 +212,14 @@ class Board:
         
         if self.squares[row][col].is_possible_move:
             
-            #On enlève la pièce de la case précédente
+            # Deleting previous square's piece
             prev_row, prev_col = piece.moves[-1]
             self.squares[prev_row][prev_col].piece = None 
             
-            #On met à jour les infos de la pièce
+            # Storing movement data
             piece.moves.append((row,col))   
             
-            #On ajoute la pièce à la case suivante
+            # Addind the piece to the next square
             self.squares[row][col].piece = piece
         
             print( f"The {piece.color} {piece.name} moved from {prev_row, prev_col} to {row,col}")

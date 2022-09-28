@@ -97,7 +97,7 @@ class Main:
             
             pygame.display.update()
             
-            time.sleep(0.01) #ralentit l'itération
+            time.sleep(0.01) # Slower the framerate
             
 
 main = Main()
