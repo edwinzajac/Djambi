@@ -1,8 +1,6 @@
 from const import *
-from piece import *
-from square import Square
-
-from player import Player
+from .piece import *
+from .square import Square
 
 class Board:
     

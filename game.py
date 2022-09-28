@@ -1,7 +1,7 @@
 import pygame
 
 from const import *
-from board import Board
+from board.board import Board
 from dragger import Dragger
 from player import Player
 
