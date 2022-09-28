@@ -4,7 +4,7 @@
 
 ## Assets
 
-| Chief                                     | Assassin | Diplomat | Necromobile| Reporter                                     | militant | Crown |
+| Chief                                     | Assassin | Diplomat | Necromobile| Reporter                                     | Militant | Crown |
 |:------------------------------------------|:---------|:---------|:------------|:---------|:---------------------------------------------|:-------|
 | <img src="./assets/pieces/black/chief.svg"> | <img src="./assets/pieces/black/assassin.svg">|<img src="./assets/pieces/black/diplomat.svg">| <img src="./assets/pieces/black/necromobile.svg">| <img src="./assets/pieces/black/reporter.svg">|  <img src="./assets/pieces/black/militant.svg">         |  <img src="./assets/pieces/black/crown.svg">         | 
 | <img src="./assets/pieces/red/chief.svg"> | <img src="./assets/pieces/red/assassin.svg">|<img src="./assets/pieces/red/diplomat.svg">| <img src="./assets/pieces/red/necromobile.svg">| <img src="./assets/pieces/red/reporter.svg">|  <img src="./assets/pieces/red/militant.svg">         |   <img src="./assets/pieces/red/crown.svg">         |
