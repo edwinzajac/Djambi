@@ -51,7 +51,7 @@ class Main:
                         dragger.save_initial(event.pos)
                         dragger.drag_piece(piece)
                         
-                        if board.clicked_piece is None:    #Si il y'a une pièce qui a été cliquée avant
+                        if board.clicked_piece is None:    # Check if a piece has already been clicked before
                             # Show moves
                             board.cal_moves(piece,clicked_row,clicked_col)
                             
