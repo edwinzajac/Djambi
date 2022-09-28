@@ -22,10 +22,15 @@ class Dragger:
         self.initial_col = pos[0]//SQSIZE
         
     def drag_piece(self,piece):
+        print(f'Dragging the {piece.color} {piece.name} ...')
         self.piece = piece
         self.dragging = True
     
     def undrag_piece(self):
+        try:
+            print(f'Undragging the {self.piece.color} {self.piece.name} ...')
+        except:
+            pass
         self.piece = None
         self.dragging = False
         

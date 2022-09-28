@@ -26,7 +26,7 @@ class Main:
         self.test = False
         
         while True:
-        
+            
             game.show_bg(screen)
             
             game.show_pieces(screen)
@@ -90,6 +90,7 @@ class Main:
                 
                 
                 if event.type == pygame.QUIT:
+                    print('Arthur a perdu la partie')
                     pygame.quit()
                     sys.exit()
 

@@ -23,6 +23,8 @@ class Board:
         self.reinitialise_moves()
         
         #Calcul des nouveaux possible moves
+        print( f"Calculation of the possible moves of the {piece.color} piece '{piece.name}' at ({row},{col}) ..." )
+        
         k = 2 if piece.name == 'Militant' else 9 # Seul le militant a une portée de 2 cases
             
         dir = [-1,0,1]
@@ -62,9 +64,9 @@ class Board:
 
     def reinitialise_moves(self):
         '''
-            Reset les possible moves à zéro
+            Reset the possible moves to None
         '''
-        
+        print( 'Reset of the possible moves' )
         for r in range(ROWS):
             for c in range(COLS):
                 self.squares[r][c].is_possible_move = False              
@@ -204,8 +206,9 @@ class Board:
 
     def move_piece(self, piece, row, col):
         '''
-            Réalise le mouvement de la pièce vers la case (row, col) sous réserve que c'est possible
+            Move the piece from its position to (row,col) when it is a possible move
         '''
+        
         
         if self.squares[row][col].is_possible_move:
             
@@ -218,4 +221,5 @@ class Board:
             
             #On ajoute la pièce à la case suivante
             self.squares[row][col].piece = piece
-            
+        
+            print( f"The {piece.color} {piece.name} moved from {prev_row, prev_col} to {row,col}")

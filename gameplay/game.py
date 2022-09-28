@@ -16,6 +16,13 @@ class Game:
         
         self.board = Board(player_list)
         self.dragger = Dragger()
+    
+    
+        print('Initializing game with','\n',
+        f'Player 1 : Name = {player1.name} - Color = {player1.color}','\n',
+        f'Player 2 : Name = {player2.name} - Color = {player2.color}','\n',
+        f'Player 3 : Name = {player3.name} - Color = {player3.color}','\n',
+        f'Player 4 : Name = {player4.name} - Color = {player4.color}','\n' )
 
     
    
@@ -27,25 +34,23 @@ class Game:
         ## Dessin des cases
         for row in range(ROWS):
             for col in range(COLS):
-
-                if row==4 and col==4:
-                    color = THRONE_BG_COLOR
-                elif (row + col) % 2 == 0:
+                if (row + col) % 2 == 0:
                     color = PRIMARY_CHECKERBOARD_COLOR 
-                elif self.board.current_square_coord is not None and self.board.current_square_coord == (row,col): #on surligne la case cliquée        
-                    color = (255,160,160)
                 else:
                     color = SECONDARY_CHECKERBOARD_COLOR 
                     
+                if self.board.current_square_coord is not None and self.board.current_square_coord == (row,col): #on surligne la case cliquée        
+                    color = (255,160,160)
                 
                 rect = ( col*SQSIZE , row * SQSIZE , SQSIZE, SQSIZE )
                 pygame.draw.rect(surface, color, rect)
                 
                 
         ## Dessin du trône
-        img = pygame.image.load(THRONE_IMG_PATH)
-        img = pygame.transform.smoothscale(img,(1*SQSIZE,1*SQSIZE))
-        img_center = WIDTH//2, HEIGHT//2 - 5  
+        path_trone = "./assets/images/bg/Trone.png"
+        img = pygame.image.load(path_trone)
+        img = pygame.transform.smoothscale(img,(1.2*SQSIZE,1.2*SQSIZE))
+        img_center = HEIGHT//2, WIDTH//2  
         img_rect = img.get_rect(center = img_center)
         surface.blit(img,img_rect)
                
@@ -60,7 +65,7 @@ class Game:
                     piece = self.board.squares[row][col].piece
                     if piece is not self.dragger.piece:
                         img = pygame.image.load(piece.texture)
-                        img = pygame.transform.smoothscale(img,(SQSIZE*0.9,SQSIZE*0.9))
+                        img = pygame.transform.smoothscale(img,(SQSIZE,SQSIZE))
                         img_center = col * SQSIZE + SQSIZE//2, row * SQSIZE + SQSIZE//2
                         piece.texture_rect = img.get_rect(center = img_center)
                         surface.blit(img,piece.texture_rect)
@@ -69,11 +74,13 @@ class Game:
         '''
             Affiche les coups possibles en fonction de l'attribut "is_possible_move" de l'objet Square
         '''
-        
         for row in range(ROWS):
             for col in range(COLS):
                 square = self.board.squares[row][col]
                 if square.is_possible_move:
                     color = POSSIBLE_MOVE_COLOR 
                     circle_center = col * SQSIZE + SQSIZE//2, row * SQSIZE + SQSIZE//2
-                    disque = pygame.draw.circle(surface, color, circle_center, SQSIZE//10)
+                    pygame.draw.circle(surface, color, circle_center, SQSIZE//10)
+                    
+                      
+                    
