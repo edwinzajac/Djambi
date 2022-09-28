@@ -28,9 +28,9 @@ class Game:
         for row in range(ROWS):
             for col in range(COLS):
                 if (row + col) % 2 == 0:
-                    color = (240,240,220)
+                    color = PRIMARY_CHECKERBOARD_COLOR 
                 else:
-                    color = (120,120,90)
+                    color = SECONDARY_CHECKERBOARD_COLOR 
                     
                 if self.board.current_square_coord is not None and self.board.current_square_coord == (row,col): #on surligne la case cliquée        
                     color = (255,160,160)
@@ -58,7 +58,7 @@ class Game:
                     piece = self.board.squares[row][col].piece
                     if piece is not self.dragger.piece:
                         img = pygame.image.load(piece.texture)
-                        img = pygame.transform.scale(img,(SQSIZE,SQSIZE))
+                        img = pygame.transform.smoothscale(img,(SQSIZE,SQSIZE))
                         img_center = col * SQSIZE + SQSIZE//2, row * SQSIZE + SQSIZE//2
                         piece.texture_rect = img.get_rect(center = img_center)
                         surface.blit(img,piece.texture_rect)
