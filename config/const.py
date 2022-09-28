@@ -21,7 +21,12 @@ with open("config/colors.json","r") as colorsJson:
     PRIMARY_CHECKERBOARD_COLOR = colorsDict["checker_board"]["PRIMARY"] 
     SECONDARY_CHECKERBOARD_COLOR = colorsDict["checker_board"]["SECONDARY"]
 
+    DEAD_COLOR = colorsDict["dead"]
+    THRONE_BG_COLOR = colorsDict["throne"]["background"]
     P1_COLOR = colorsDict["pieces"]["red"]
     P2_COLOR = colorsDict["pieces"]["blue"]
     P3_COLOR = colorsDict["pieces"]["yellow"]
     P4_COLOR = colorsDict["pieces"]["green"]
+
+# IMAGES
+THRONE_IMG_PATH = "assets/pieces/black/crown.svg"

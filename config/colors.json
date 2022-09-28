@@ -3,7 +3,11 @@
         "PRIMARY":"#95a5a6",
         "SECONDARY":"#ecf0f1"
     },
+    "throne":{
+        "background":"black"
+    },
     "possible_moves": "#2c3e50",
+    "dead": "#7f8c8d",
     "pieces": {
         "red": {
             "fillColor": "#e74c3c",
