@@ -34,7 +34,7 @@ class Dragger:
         
         img = pygame.image.load(texture)
         
-        img = pygame.transform.scale(img,(1.3*SQSIZE,1.3*SQSIZE))
+        img = pygame.transform.smoothscale(img,(1.3*SQSIZE,1.3*SQSIZE))
 
         img_center = (self.mouseX , self.mouseY)
         self.piece.texture_rect = img.get_rect(center = img_center)
