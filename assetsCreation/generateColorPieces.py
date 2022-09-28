@@ -1,18 +1,13 @@
-""" DiBISO Page Scraper
-This script allows the user to get the text data from the selected pages.
+""" SVG Generator for pieces 
+This script generates the svgs corresponding to the colored pieces of the game.
 
 Usage:
-python pageScraper.py subdirectoriesFile outputFile
+python generateColorPieces.py piecesDir 
 
-:subdirectoriesFile: the file containing the list of subdirectories 
-(1 on each line) corresponding to the selected pages
+:piecesDir: the pieces folder containing a folder for each color, 'blank' being
+the one containing all non formated svgs with {fillColor} and 
+{drawColor} to replace
 
-:outputFile: the output file where the data will be stored in json format
-
-Three things are assumed:
-- the main content is in a div with the class 'main-content'
-- the base url is 'https://www.bibliotheques.universite-paris-saclay.fr'
-- the title of the page is the first line of the main content
 """
 
 import logging
