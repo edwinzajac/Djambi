@@ -26,6 +26,7 @@ class Main:
         self.test = False
         
         while True:
+        
             game.show_bg(screen)
             
             game.show_pieces(screen)
@@ -46,11 +47,33 @@ class Main:
                 
                     if board.squares[clicked_row][clicked_col].has_real_piece():
                         piece = board.squares[clicked_row][clicked_col].piece
+                        
                         dragger.save_initial(event.pos)
                         dragger.drag_piece(piece)
                         
-                        #Affiche coups 
-                        board.cal_moves(piece,clicked_row,clicked_col)
+                        if board.clicked_piece is None:    #Si il y'a une pièce qui a été cliquée avant
+                            #Affiche coups 
+                            board.cal_moves(piece,clicked_row,clicked_col)
+                            
+                            #Sauve la pièce cliquée
+                            board.clicked_piece = piece
+                            
+                        else:
+                             #Déplacement de la pièce
+                            board.move_piece(board.clicked_piece,clicked_row,clicked_col)
+                            
+                            #Réactualisation des info
+                            board.clicked_piece = None
+                            board.reinitialise_moves()
+                        
+
+                    else:
+                        #Déplacement de la pièce
+                        board.move_piece(board.clicked_piece,clicked_row,clicked_col)
+                        
+                        #Réactualisation des info
+                        board.clicked_piece = None
+                        board.reinitialise_moves()
                     
                 #click release
                 elif event.type == pygame.MOUSEBUTTONUP:

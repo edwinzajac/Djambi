@@ -5,7 +5,7 @@ class Piece:
     #piecesDirectory = "./images/pieces"
     piecesDirectory = "./assets/pieces"
     
-    def __init__(self, name, color, value, texture = None, texture_rect = None):
+    def __init__(self, name, color, value, initial_pos = None, texture = None, texture_rect = None):
         self.name = name
         self.color = color
         value_sign = 1 if color == 'white' else -1
@@ -13,7 +13,7 @@ class Piece:
         self.texture = texture
         self.set_textures()
         self.texture_rect = texture_rect
-        self.moves = []
+        self.moves = [initial_pos]
         self.moved = False
         
     def set_textures(self):
@@ -31,45 +31,45 @@ class Piece:
     
 class Militant(Piece):
     
-    def __init__(self,color):
+    def __init__(self,color, initial_pos):
         
        self.dir = -1 if color == 'blanc' else 1
-       super().__init__('Militant',color, 1) 
+       super().__init__('Militant',color, 1, initial_pos) 
        
 class Assassin(Piece):
     
-    def __init__(self,color):
+    def __init__(self,color, initial_pos):
         
         self.dir = -1 if color == 'blanc' else 1
-        super().__init__('Assassin',color, 3) 
+        super().__init__('Assassin',color, 3, initial_pos) 
         
 class Reporter(Piece):
     
-    def __init__(self,color):
+    def __init__(self,color, initial_pos):
         
         self.dir = -1 if color == 'blanc' else 1
-        super().__init__('Reporter',color, 5)
+        super().__init__('Reporter',color, 5, initial_pos)
         
 class Diplomat(Piece):
     
-    def __init__(self,color):
+    def __init__(self,color, initial_pos):
         
         self.dir = -1 if color == 'blanc' else 1
-        super().__init__('Diplomat',color, 4)
+        super().__init__('Diplomat',color, 4, initial_pos)
         
 class Necromobile(Piece):
     
-    def __init__(self,color):
+    def __init__(self,color, initial_pos):
         
         self.dir = -1 if color == 'blanc' else 1
-        super().__init__('Necromobile',color, 9)
+        super().__init__('Necromobile',color, 9, initial_pos)
         
 class Chief(Piece):
     
-    def __init__(self,color):
+    def __init__(self,color, initial_pos):
         
         self.dir = -1 if color == 'blanc' else 1
-        super().__init__('Chief',color, 80)
+        super().__init__('Chief',color, 80, initial_pos)
 
 class Rock(Piece):
     
