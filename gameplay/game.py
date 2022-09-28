@@ -72,7 +72,7 @@ class Game:
             for col in range(COLS):
                 square = self.board.squares[row][col]
                 if square.is_possible_move:
-                    color = (0,0,0)
+                    color = POSSIBLE_MOVE_COLOR 
                     circle_center = col * SQSIZE + SQSIZE//2, row * SQSIZE + SQSIZE//2
                     disque = pygame.draw.circle(surface, color, circle_center, SQSIZE//10)
                     

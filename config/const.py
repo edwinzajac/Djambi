@@ -4,8 +4,8 @@ from gettext import install
 import json
 
 
-WIDTH = 540 
-HEIGHT = 540 #doit être multiple de 9
+WIDTH = 630 
+HEIGHT = 630 #doit être multiple de 9
 
 # Board dimensions
 
@@ -14,11 +14,14 @@ COLS = 9
 SQSIZE = WIDTH // COLS
 
 # COLORS
-
-PRIMARY_CHECKERBOARD_COLOR = (236, 240, 241)
-SECONDARY_CHECKERBOARD_COLOR = (149, 165, 166) 
 with open("config/colors.json","r") as colorsJson:
     colorsDict = json.load(colorsJson)
 
-PRIMARY_CHECKERBOARD_COLOR = colorsDict["checker_board"]["PRIMARY"] 
-SECONDARY_CHECKERBOARD_COLOR = colorsDict["checker_board"]["SECONDARY"]
+    POSSIBLE_MOVE_COLOR = colorsDict["possible_moves"]
+    PRIMARY_CHECKERBOARD_COLOR = colorsDict["checker_board"]["PRIMARY"] 
+    SECONDARY_CHECKERBOARD_COLOR = colorsDict["checker_board"]["SECONDARY"]
+
+    P1_COLOR = colorsDict["pieces"]["red"]
+    P2_COLOR = colorsDict["pieces"]["blue"]
+    P3_COLOR = colorsDict["pieces"]["yellow"]
+    P4_COLOR = colorsDict["pieces"]["green"]
