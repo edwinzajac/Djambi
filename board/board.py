@@ -158,14 +158,14 @@ class Board:
     def cal_moves1(self, piece, row, col):
         
         '''
-            Renvoie la liste des mouvements possibles en étoile ie dans toutes les directions
+            Calculate the possible moves for the first step of the turn (considering only the movement of the piece and not their effects)
         '''
         
         #Reset des possible moves
         self.reinitialise_moves()
         
         #Calcul des nouveaux possible moves
-        print( f"Calculation of the possible moves of the {piece.color} piece '{piece.name}' at ({row},{col}) ..." )
+        print( f"Calculation of the possible moves (1st step) of the {piece.color} piece '{piece.name}' at ({row},{col}) ..." )
         
         k = 2 if piece.name == 'Militant' else 9 # Seul le militant a une portée de 2 cases
             
@@ -203,21 +203,37 @@ class Board:
                             new_col += y
                                 
                             k_i += 1
+                            
+        # Only the Chief is allowed to go to the center
+        if piece.name != 'Chief':
+            self.squares[4][4].is_possible_move = False 
+        
     
     def cal_moves2(self):
         '''
             Calculate the possible moves for the second step of the turn (placing corpses or other pieces)        
         '''
         
+        print( "Calculation of the possible moves (2st step) ..." )
+
         self.reinitialise_moves()
         
         for r in range(ROWS):
             
             for c in range(COLS):
                 
-                if not self.squares[r][c].has_piece():
-                    self.squares[r][c].is_possible_move = True
+                if r!=4 or c != 4: # The trone is not allowed
+                    
+                    if not self.squares[r][c].has_piece():
+                        self.squares[r][c].is_possible_move = True
 
+    def teleport(self, piece, row, col):
+        '''
+            Put the piece (real piece or corpse) at the new position (row,col) assuming the move is possible
+        '''
+        
+        pass
+        
     def move_piece(self, piece, row, col):
         '''
             Move the piece from its position to (row,col) when it is a possible move
@@ -236,12 +252,21 @@ class Board:
             
             # Addind the piece to the next square
             self.squares[row][col].piece = piece
+            print( f"The {piece.color} {piece.name} moved from {prev_row, prev_col} to {row,col}")   
             
             # Piece's effect if target square contains a piece
             if target_square_piece is not None:
                 
                 if piece.name == 'Militant' or piece.name == 'Chief':
-                    pass
+                    self.cal_moves2()
+                    
+                    n_row = int(input("Line of the Corpse"))
+                    n_col = int(input("Col of the corpse"))
+                    
+                    if self.squares[n_row][n_col].is_possible_move:
+                        self.squares[n_row][n_col].piece = Corpse()
+                    else:
+                        raise 'Impossible'
                     
                 elif piece.name == 'Assassin':
                     pass
@@ -250,11 +275,19 @@ class Board:
                     pass
                 
                 elif piece.name == 'Diplomat':
-                    pass
+                    self.cal_moves2()
                 
                 elif piece.name == 'Necromobile':
-                    pass
-        
-            print( f"The {piece.color} {piece.name} moved from {prev_row, prev_col} to {row,col}")
+                    self.cal_moves2()
+                    
+                    n_row = int(input("Line of the Corpse"))
+                    n_col = int(input("Col of the corpse"))
+                    
+                    if self.squares[n_row][n_col].is_possible_move:
+                        self.squares[n_row][n_col].piece = Corpse()
+                    else:
+                        raise 'Impossible'
+
+    
 
     
