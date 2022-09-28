@@ -13,64 +13,6 @@ class Board:
         self.current_square_coord = current_square_coord #pour garder en sauvegarde la dernière case cliquée sous forme (row, col)
         self.clicked_piece = None
         
-    def cal_moves(self, piece, row, col):
-        
-        '''
-            Renvoie la liste des mouvements possibles en étoile ie dans toutes les directions
-        '''
-        
-        #Reset des possible moves
-        self.reinitialise_moves()
-        
-        #Calcul des nouveaux possible moves
-        print( f"Calculation of the possible moves of the {piece.color} piece '{piece.name}' at ({row},{col}) ..." )
-        
-        k = 2 if piece.name == 'Militant' else 9 # Seul le militant a une portée de 2 cases
-            
-        dir = [-1,0,1]
-        
-        for x in dir:  # pour toutes les directions d'espace
-            for y in dir:
-                if x != 0 or y != 0:
-                    k_i = 1
-                    new_row = row + x
-                    new_col = col + y
-                    
-                    while k_i <= k and Square.in_board(new_row,new_col): # on va dans la direction souhaitée tant qu'on reste sur le board
-                        
-                        square = self.squares[new_row][new_col]
-                        
-                        if square.has_piece():
-                            
-                            if square.has_rival_piece(piece) and not(square.has_rock()) and piece.name != "Reporter" and piece.name != "Necromobile": #Si la pièce contenue n'est pas un rocher et qu'il s'agit d'une pièce rivale, et qu'en plus la pièce déplacée n'est ni un reporter ni une nécromobile, il est possible d'aller sur cette case
-                            
-                                self.squares[new_row][new_col].is_possible_move = True
-                                
-                            if square.has_rock() and piece.name == "Necromobile":
-                                
-                                self.squares[new_row][new_col].is_possible_move = True
-                                
-                            k_i = k + 1 #dès qu'on rencontre une pièce, on arrête la boucle
-                                
-                                
-                        else:
-                            
-                            self.squares[new_row][new_col].is_possible_move = True
-                            
-                            new_row += x
-                            new_col += y
-                                
-                            k_i += 1
-
-    def reinitialise_moves(self):
-        '''
-            Reset the possible moves to None
-        '''
-        print( 'Reset of the possible moves' )
-        for r in range(ROWS):
-            for c in range(COLS):
-                self.squares[r][c].is_possible_move = False              
-    
     def _create(self):
         '''
             Crée un board avec les objets Cases (Square) qui contiendra les pièces
@@ -201,25 +143,118 @@ class Board:
                     
                     self.squares[abs(row-2)][col] = Square(abs(row-2),col,Necromobile( color, (abs(row-2),col) ) ) # row = 2 or 6
 
-            self.squares[5][5] = Square(5,5,Rock())
-            self.squares[1][5] = Square(1,5,Rock())
+            self.squares[5][5] = Square(5,5,Corpse())
+            self.squares[1][5] = Square(1,5,Corpse())
+
+    def reinitialise_moves(self):
+        '''
+            Reset the possible moves to None
+        '''
+        print( 'Reset of the possible moves' )
+        for r in range(ROWS):
+            for c in range(COLS):
+                self.squares[r][c].is_possible_move = False              
+    
+    def cal_moves1(self, piece, row, col):
+        
+        '''
+            Renvoie la liste des mouvements possibles en étoile ie dans toutes les directions
+        '''
+        
+        #Reset des possible moves
+        self.reinitialise_moves()
+        
+        #Calcul des nouveaux possible moves
+        print( f"Calculation of the possible moves of the {piece.color} piece '{piece.name}' at ({row},{col}) ..." )
+        
+        k = 2 if piece.name == 'Militant' else 9 # Seul le militant a une portée de 2 cases
+            
+        dir = [-1,0,1]
+        
+        for x in dir:  # pour toutes les directions d'espace
+            for y in dir:
+                if x != 0 or y != 0:
+                    k_i = 1
+                    new_row = row + x
+                    new_col = col + y
+                    
+                    while k_i <= k and Square.in_board(new_row,new_col): # on va dans la direction souhaitée tant qu'on reste sur le board
+                        
+                        square = self.squares[new_row][new_col]
+                        
+                        if square.has_piece():
+                            
+                            if square.has_rival_piece(piece) and not(square.has_corpse()) and piece.name != "Reporter" and piece.name != "Necromobile": #Si la pièce contenue n'est pas un rocher et qu'il s'agit d'une pièce rivale, et qu'en plus la pièce déplacée n'est ni un reporter ni une nécromobile, il est possible d'aller sur cette case
+                            
+                                self.squares[new_row][new_col].is_possible_move = True
+                                
+                            if square.has_corpse() and piece.name == "Necromobile":
+                                
+                                self.squares[new_row][new_col].is_possible_move = True
+                                
+                            k_i = k + 1 #dès qu'on rencontre une pièce, on arrête la boucle
+                                
+                                
+                        else:
+                            
+                            self.squares[new_row][new_col].is_possible_move = True
+                            
+                            new_row += x
+                            new_col += y
+                                
+                            k_i += 1
+    
+    def cal_moves2(self):
+        '''
+            Calculate the possible moves for the second step of the turn (placing corpses or other pieces)        
+        '''
+        
+        self.reinitialise_moves()
+        
+        for r in range(ROWS):
+            
+            for c in range(COLS):
+                
+                if not self.squares[r][c].has_piece():
+                    self.squares[r][c].is_possible_move = True
 
     def move_piece(self, piece, row, col):
         '''
             Move the piece from its position to (row,col) when it is a possible move
         '''
         
-        
         if self.squares[row][col].is_possible_move:
             
-            # Deleting previous square's piece
+            # Deleting the piece of its current square
             prev_row, prev_col = piece.moves[-1]
             self.squares[prev_row][prev_col].piece = None 
             
             # Storing movement data
             piece.moves.append((row,col))   
             
+            target_square_piece = self.squares[row][col].piece # Piece of the target square
+            
             # Addind the piece to the next square
             self.squares[row][col].piece = piece
+            
+            # Piece's effect if target square contains a piece
+            if target_square_piece is not None:
+                
+                if piece.name == 'Militant' or piece.name == 'Chief':
+                    pass
+                    
+                elif piece.name == 'Assassin':
+                    pass
+                
+                elif piece.name == 'Reporter':
+                    pass
+                
+                elif piece.name == 'Diplomat':
+                    pass
+                
+                elif piece.name == 'Necromobile':
+                    pass
         
             print( f"The {piece.color} {piece.name} moved from {prev_row, prev_col} to {row,col}")
+
+    

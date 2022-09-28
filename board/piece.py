@@ -17,13 +17,13 @@ class Piece:
         self.moved = False
         
     def set_textures(self):
-        if self.name != 'Rock':
+        if self.name != 'Corpse':
             self.texture = os.path.join(
                 f'{self.piecesDirectory}/{self.color}/{self.name.lower()}.svg'
             )
         else:
             self.texture = os.path.join(
-                f'{self.piecesDirectory}/blank/rock.svg'
+                f'{self.piecesDirectory}/blank/corpse.svg'
             )
         
     def add_moves(self,move):
@@ -71,8 +71,8 @@ class Chief(Piece):
         self.dir = -1 if color == 'blanc' else 1
         super().__init__('Chief',color, 80, initial_pos)
 
-class Rock(Piece):
+class Corpse(Piece):
     
     def __init__(self):
     
-        super().__init__('Rock', "", 0)
+        super().__init__('Corpse', "", 0)

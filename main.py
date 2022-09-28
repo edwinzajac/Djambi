@@ -53,7 +53,7 @@ class Main:
                         
                         if board.clicked_piece is None:    # Check if a piece has already been clicked before
                             # Show moves
-                            board.cal_moves(piece,clicked_row,clicked_col)
+                            board.cal_moves1(piece,clicked_row,clicked_col)
                             
                             # Save the last clicked piece
                             board.clicked_piece = piece
