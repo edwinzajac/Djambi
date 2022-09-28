@@ -52,35 +52,35 @@ class Main:
                         dragger.drag_piece(piece)
                         
                         if board.clicked_piece is None:    #Si il y'a une pièce qui a été cliquée avant
-                            #Affiche coups 
+                            # Show moves
                             board.cal_moves(piece,clicked_row,clicked_col)
                             
-                            #Sauve la pièce cliquée
+                            # Save the last clicked piece
                             board.clicked_piece = piece
                             
                         else:
-                             #Déplacement de la pièce
+                            # Piece movement
                             board.move_piece(board.clicked_piece,clicked_row,clicked_col)
                             
-                            #Réactualisation des info
+                            # Reinitialisation of info
                             board.clicked_piece = None
                             board.reinitialise_moves()
                         
 
                     else:
-                        #Déplacement de la pièce
+                        # Piece movement
                         board.move_piece(board.clicked_piece,clicked_row,clicked_col)
                         
-                        #Réactualisation des info
+                        # Reinitialisation of info
                         board.clicked_piece = None
                         board.reinitialise_moves()
                     
-                #click release
+                # click release
                 elif event.type == pygame.MOUSEBUTTONUP:
                     dragger.undrag_piece()
 
                 
-                #déplacement souris
+                # Mouse motion
                 elif event.type == pygame.MOUSEMOTION:
                     if dragger.dragging:
                         dragger.update_mouse(event.pos)

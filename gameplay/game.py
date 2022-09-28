@@ -28,10 +28,10 @@ class Game:
    
     def show_bg(self,surface):
         '''
-            Permet d'afficher le background (cases + trône)        
+            Show the background, including all the squares and the trone      
         '''
         
-        ## Dessin des cases
+        ## Drawing squares
         for row in range(ROWS):
             for col in range(COLS):
                 if (row + col) % 2 == 0:
@@ -46,7 +46,7 @@ class Game:
                 pygame.draw.rect(surface, color, rect)
                 
                 
-        ## Dessin du trône
+        ## Drawing trone
         path_trone = "./assets/images/bg/Trone.png"
         img = pygame.image.load(path_trone)
         img = pygame.transform.smoothscale(img,(1.2*SQSIZE,1.2*SQSIZE))
@@ -57,7 +57,7 @@ class Game:
 
     def show_pieces(self,surface):
         '''
-            Permet d'afficher les pièces sur le board
+            Showing pieces on the board after having loaded the textures of the pieces from images
         '''
         for row in range(ROWS):
             for col in range(COLS):
@@ -72,7 +72,7 @@ class Game:
                         
     def show_moves(self,surface):
         '''
-            Affiche les coups possibles en fonction de l'attribut "is_possible_move" de l'objet Square
+            Show possible moves thanks to Square's attribute "is_possible_move"
         '''
         for row in range(ROWS):
             for col in range(COLS):

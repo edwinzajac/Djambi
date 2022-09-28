@@ -7,7 +7,7 @@ class Board:
     def __init__(self,player_list, current_square_coord = None):
         self.squares = []
         self.player_list = player_list  #liste des objets joueurs
-        self.nb_joueurs = len(player_list)
+        self.players_nb = len(player_list)
         self._create()
         self._add_pieces()
         self.current_square_coord = current_square_coord #pour garder en sauvegarde la dernière case cliquée sous forme (row, col)
@@ -86,7 +86,7 @@ class Board:
             Ajoute les pièces que contiendra le board à l'instant initial à chaque objet Square en fonction du nombre de joueurs
         '''
         
-        if self.nb_joueurs == 2:
+        if self.players_nb == 2:
             
             color1 = self.player_list[0].color
             color2 = self.player_list[1].color
@@ -137,7 +137,7 @@ class Board:
                 self.squares[6][col] = Square(6,col,Necromobile( color, (6,col) ) )
         
             
-        elif self.nb_joueurs == 4:
+        elif self.players_nb == 4:
             
             color1 = self.player_list[0].color
             color2 = self.player_list[1].color
