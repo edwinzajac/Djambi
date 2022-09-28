@@ -1,5 +1,5 @@
 import pygame
-from const import *
+from config.const import *
 
 class Dragger:
     

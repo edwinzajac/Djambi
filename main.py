@@ -2,7 +2,7 @@ import sys
 import pygame
 import time
 
-from const import *
+from config.const import *
 from game import Game
 
 class Main:

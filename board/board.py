@@ -1,4 +1,4 @@
-from const import *
+from config.const import *
 from .piece import *
 from .square import Square
 
