@@ -5,7 +5,8 @@ import json
 
 
 WIDTH = 630 
-HEIGHT = 630 #doit être multiple de 9
+HEIGHT = WIDTH #doit être multiple de 9
+MARGIN = WIDTH//10
 
 # Board dimensions
 
@@ -21,6 +22,7 @@ with open("config/colors.json","r") as colorsJson:
     PRIMARY_CHECKERBOARD_COLOR = colorsDict["checker_board"]["PRIMARY"] 
     SECONDARY_CHECKERBOARD_COLOR = colorsDict["checker_board"]["SECONDARY"]
 
+    BG_COLOR = colorsDict["background"]
     DEAD_COLOR = colorsDict["dead"]
     THRONE_BG_COLOR = colorsDict["throne"]["background"]
     P1_COLOR = colorsDict["pieces"]["red"]

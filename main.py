@@ -13,7 +13,8 @@ class Main:
 
     def __init__(self):
         pygame.init()
-        self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+        self.screen = pygame.display.set_mode((WIDTH+MARGIN, HEIGHT+MARGIN))
+        self.screen.fill(BG_COLOR)
         pygame.display.set_caption('DJAMBI LES BONOBOS')
         self.game = Game()
 
@@ -45,8 +46,8 @@ class Main:
                     logger.info(f"EVENT: MOUSEBUTTONDOWN")
                     dragger.update_mouse(event.pos)
                     
-                    clicked_row = dragger.mouseY//SQSIZE
-                    clicked_col = dragger.mouseX//SQSIZE
+                    clicked_row = (dragger.mouseY-MARGIN//2)//SQSIZE
+                    clicked_col = (dragger.mouseX-MARGIN//2)//SQSIZE
                     
                     board.current_square_coord = (clicked_row,clicked_col)
                 

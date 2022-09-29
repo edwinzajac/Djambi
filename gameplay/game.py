@@ -39,7 +39,7 @@ class Game:
                 if self.board.current_square_coord is not None and self.board.current_square_coord == (row,col): #on surligne la case cliquée        
                     color = (255,160,160)
                 
-                rect = ( col*SQSIZE , row * SQSIZE , SQSIZE, SQSIZE )
+                rect = ( col*SQSIZE + MARGIN//2 , row * SQSIZE + MARGIN//2 , SQSIZE, SQSIZE )
                 pygame.draw.rect(surface, color, rect)
                 
                 
@@ -47,7 +47,7 @@ class Game:
         path_trone = "./assets/images/bg/Trone.png"
         img = pygame.image.load(path_trone)
         img = pygame.transform.smoothscale(img,(1.2*SQSIZE,1.2*SQSIZE))
-        img_center = HEIGHT//2, WIDTH//2  
+        img_center = HEIGHT//2 + MARGIN//2, WIDTH//2 + MARGIN//2 
         img_rect = img.get_rect(center = img_center)
         surface.blit(img,img_rect)
                
@@ -63,7 +63,7 @@ class Game:
                     if piece is not self.dragger.piece:
                         img = pygame.image.load(piece.texture)
                         img = pygame.transform.smoothscale(img,(SQSIZE*0.9,SQSIZE*0.9))
-                        img_center = col * SQSIZE + SQSIZE//2, row * SQSIZE + SQSIZE//2
+                        img_center = col * SQSIZE + SQSIZE//2 + MARGIN//2, row * SQSIZE + SQSIZE//2 + MARGIN//2
                         piece.texture_rect = img.get_rect(center = img_center)
                         surface.blit(img,piece.texture_rect)
                         
@@ -76,7 +76,7 @@ class Game:
                 square = self.board.squares[row][col]
                 if square.is_possible_move:
                     color = POSSIBLE_MOVE_COLOR 
-                    circle_center = col * SQSIZE + SQSIZE//2, row * SQSIZE + SQSIZE//2
+                    circle_center = col * SQSIZE + SQSIZE//2 + MARGIN//2, row * SQSIZE + SQSIZE//2 + MARGIN//2
                     pygame.draw.circle(surface, color, circle_center, SQSIZE//10)
                     
                       
