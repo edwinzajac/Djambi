@@ -20,10 +20,8 @@ class Game:
         self.board = Board(player_list)
         self.dragger = Dragger()
     
-    
-        logger.info(f"Initializing game with {' '.join([str(p) for p in player_list])}")
+        logger.info(f"Game Created")
 
-    
    
     def show_bg(self,surface):
         '''
@@ -64,7 +62,7 @@ class Game:
                     piece = self.board.squares[row][col].piece
                     if piece is not self.dragger.piece:
                         img = pygame.image.load(piece.texture)
-                        img = pygame.transform.smoothscale(img,(SQSIZE,SQSIZE))
+                        img = pygame.transform.smoothscale(img,(SQSIZE*0.9,SQSIZE*0.9))
                         img_center = col * SQSIZE + SQSIZE//2, row * SQSIZE + SQSIZE//2
                         piece.texture_rect = img.get_rect(center = img_center)
                         surface.blit(img,piece.texture_rect)
