@@ -42,6 +42,7 @@ class Main:
                 
                 #click
                 if event.type == pygame.MOUSEBUTTONDOWN:
+                    logger.info(f"EVENT: MOUSEBUTTONDOWN")
                     dragger.update_mouse(event.pos)
                     
                     clicked_row = dragger.mouseY//SQSIZE
@@ -81,6 +82,7 @@ class Main:
                     
                 # click release
                 elif event.type == pygame.MOUSEBUTTONUP:
+                    logger.info(f"EVENT: MOUSEBUTTONUP")
                     dragger.undrag_piece()
 
                 
