@@ -1,4 +1,7 @@
 import os
+import logging
+from config.const import ROWS
+logger = logging.getLogger(__name__)
 
 class Piece:
 
@@ -15,6 +18,8 @@ class Piece:
         self.texture_rect = texture_rect
         self.moves = [initial_pos]
         self.moved = False
+        self.range = ROWS
+        logger.debug(f"{self} created")
         
     def set_textures(self):
         if self.name != 'Corpse':
@@ -38,6 +43,7 @@ class Militant(Piece):
         
        self.dir = -1 if color == 'blanc' else 1
        super().__init__('Militant',color, 1, initial_pos) 
+       self.range=2
        
 class Assassin(Piece):
     

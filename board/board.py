@@ -185,12 +185,15 @@ class Board:
 
         """
         listOfPossibleMoves = []
-        #TODO Put range as an attribute for each piece Class
-        limitedRange = (piece.name=="Militant")
-        if limitedRange:
-            maxRange = 2
-        else:
-            maxRange = ROWS
+
+        #Special case of Corpses
+        if piece.__class__ == Corpse:
+            for new_pos in product(range(ROWS),range(COLS)):
+                square = self.squares[new_pos[0]][new_pos[1]]
+                if self.availableDestination(square,piece):
+                    listOfPossibleMoves.append(new_pos)
+            return listOfPossibleMoves
+
 
         for (x,y) in product([-1,0,1],[-1,0,1]):  # pour toutes les directions d'espace
             if x==0 and y==0:
@@ -199,7 +202,7 @@ class Board:
             new_pos = pos[0]+x, pos[1]+y
             
             #While in range and on board
-            while k_i <= maxRange and Square.in_board(new_pos[0],new_pos[1]): 
+            while k_i <= piece.range and Square.in_board(new_pos[0],new_pos[1]): 
                 
                 square = self.squares[new_pos[0]][new_pos[1]]
 
@@ -208,7 +211,7 @@ class Board:
                 
                 #Stop if it encounters a piece
                 if square.has_piece():
-                    k_i = maxRange + 1 
+                    k_i = piece.range + 1 
                         
                 new_pos = new_pos[0]+x, new_pos[1]+y
                 k_i += 1
@@ -224,11 +227,11 @@ class Board:
 
         """
         if square.row==ROWS//2 and square.col==ROWS//2:
-            return piece.name == "Chief"
+            return piece.__class__== Chief
         elif square.has_piece():
-            if piece.name == "Reporter":
+            if piece.__class__==Reporter or piece.__class__==Corpse:
                 return False 
-            elif piece.name == "Necromobile":
+            elif piece.__class__ == Necromobile:
                 return square.has_corpse()
             else:
                 return square.has_rival_piece(piece) 
@@ -284,6 +287,7 @@ class Board:
                 
                 if piece.name == 'Militant' or piece.name == 'Chief':
                     self.cal_moves2()
+                    self.cal_mov
                     
                     n_row = int(input("Line of the Corpse"))
                     n_col = int(input("Col of the corpse"))
