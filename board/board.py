@@ -186,15 +186,6 @@ class Board:
         """
         listOfPossibleMoves = []
 
-        #Special case of Corpses
-        if piece.__class__ == Corpse:
-            for new_pos in product(range(ROWS),range(COLS)):
-                square = self.squares[new_pos[0]][new_pos[1]]
-                if self.availableDestination(square,piece):
-                    listOfPossibleMoves.append(new_pos)
-            return listOfPossibleMoves
-
-
         for (x,y) in product([-1,0,1],[-1,0,1]):  # pour toutes les directions d'espace
             if x==0 and y==0:
                 continue
@@ -287,7 +278,6 @@ class Board:
                 
                 if piece.name == 'Militant' or piece.name == 'Chief':
                     self.cal_moves2()
-                    self.cal_mov
                     
                     n_row = int(input("Line of the Corpse"))
                     n_col = int(input("Col of the corpse"))
