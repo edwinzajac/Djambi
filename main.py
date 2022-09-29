@@ -1,9 +1,13 @@
 import sys
 import pygame
 import time
+import logging
 
 from config.const import *
 from gameplay.game import Game
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 class Main:
 
@@ -90,7 +94,7 @@ class Main:
                 
                 
                 if event.type == pygame.QUIT:
-                    print('Arthur a perdu la partie')
+                    logger.info("End of Game")
                     pygame.quit()
                     sys.exit()
 

@@ -28,6 +28,9 @@ class Piece:
         
     def add_moves(self,move):
         self.moves.append(move)
+
+    def __str__(self):
+        return f"Piece({self.name},{self.color})"
     
 class Militant(Piece):
     

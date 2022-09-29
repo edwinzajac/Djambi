@@ -1,16 +1,19 @@
 import pygame
+import logging
 
 from config.const import *
 from board.board import Board
 from .dragger import Dragger
 from .player import Player
 
+logger = logging.getLogger(__name__)
+
 class Game:
 
     def __init__(self):
         player1 = Player("Edwin", "purple")
-        player2 = Player("Arthur a une petite bite", "red")
-        player3 = Player("Xavier le connard", "yellow")
+        player2 = Player("Arthur", "red")
+        player3 = Player("Xavier", "yellow")
         player4 = Player("Un random", "blue")
         player_list = [player1,player2,player3,player4]
         
@@ -18,11 +21,7 @@ class Game:
         self.dragger = Dragger()
     
     
-        print('Initializing game with','\n',
-        f'Player 1 : Name = {player1.name} - Color = {player1.color}','\n',
-        f'Player 2 : Name = {player2.name} - Color = {player2.color}','\n',
-        f'Player 3 : Name = {player3.name} - Color = {player3.color}','\n',
-        f'Player 4 : Name = {player4.name} - Color = {player4.color}','\n' )
+        logger.info(f"Initializing game with {' '.join([str(p) for p in player_list])}")
 
     
    

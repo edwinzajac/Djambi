@@ -1,5 +1,8 @@
 import pygame
 from config.const import *
+import logging
+
+logger = logging.getLogger(__name__)
 
 class Dragger:
     
@@ -22,15 +25,12 @@ class Dragger:
         self.initial_col = pos[0]//SQSIZE
         
     def drag_piece(self,piece):
-        print(f'Dragging the {piece.color} {piece.name} ...')
         self.piece = piece
         self.dragging = True
+        logger.debug(f'DRAG {self.piece}')
     
     def undrag_piece(self):
-        try:
-            print(f'Undragging the {self.piece.color} {self.piece.name} ...')
-        except:
-            pass
+        logger.debug(f"UNDRAG {self.piece}")
         self.piece = None
         self.dragging = False
         

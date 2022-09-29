@@ -4,7 +4,6 @@ from config.const import *
 from .piece import *
 from .square import Square
 
-logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 class Board:
@@ -155,7 +154,7 @@ class Board:
         '''
             Reset the possible moves to None
         '''
-        print( 'Reset of the possible moves' )
+        logger.debug("RESET possible moves")
         for r in range(ROWS):
             for c in range(COLS):
                 self.squares[r][c].is_possible_move = False              
@@ -170,9 +169,10 @@ class Board:
         self.reinitialise_moves()
         
         #Calcul des nouveaux possible moves
-        logger.info(f"possible moves computation: ({piece.color},{piece.name}) @ ({row},{col})")
+        pos_mov = self.possible_moves(piece,(row,col))
+        logger.debug(f"Possible moves of ({piece.color},{piece.name}) @ ({row},{col}) -> {self.possible_moves(piece,(row,col))}")
         
-        for pos in self.possible_moves(piece,(row,col)):
+        for pos in pos_mov:
             self.squares[pos[0]][pos[1]].is_possible_move = True 
 
     def possible_moves(self, piece, pos):
@@ -239,11 +239,10 @@ class Board:
         '''
             Calculate the possible moves for the second step of the turn (placing corpses or other pieces)        
         '''
-        
-        print( "Calculation of the possible moves (2st step) ..." )
 
         self.reinitialise_moves()
         
+
         for r in range(ROWS):
             
             for c in range(COLS):
@@ -278,7 +277,7 @@ class Board:
             
             # Addind the piece to the next square
             self.squares[row][col].piece = piece
-            print( f"The {piece.color} {piece.name} moved from {prev_row, prev_col} to {row,col}")   
+            logger.info(f"{piece} moved from {prev_row, prev_col} to {row,col}")   
             
             # Piece's effect if target square contains a piece
             if target_square_piece is not None:

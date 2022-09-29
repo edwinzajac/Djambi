@@ -5,3 +5,6 @@ class Player:
         self.name = name
         self.color = color
         self.player_nb = player_nb
+
+    def __str__(self):
+        return f"Player({self.name},{self.color})"
