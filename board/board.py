@@ -19,7 +19,7 @@ class Board:
         
     def _create(self):
         '''
-            Crée un board avec les objets Cases (Square) qui contiendra les pièces
+            Set the board with the Squares objects
         '''
         self.squares = [[0 for row in range(ROWS)] for col in range(COLS)]
     
@@ -29,7 +29,7 @@ class Board:
             
     def _add_pieces(self):
         '''
-            Ajoute les pièces que contiendra le board à l'instant initial à chaque objet Square en fonction du nombre de joueurs
+            Set the initial pieces of the game
         '''
         
         if self.players_nb == 2:
@@ -206,7 +206,6 @@ class Board:
                         
                 new_pos = new_pos[0]+x, new_pos[1]+y
                 k_i += 1
-        logger.debug(f"possible_moves({piece},{pos})={listOfPossibleMoves}")
         return listOfPossibleMoves
 
     def availableDestination(self,square,piece):
@@ -227,7 +226,7 @@ class Board:
             else:
                 return square.has_rival_piece(piece) 
         else:
-            return True                         
+            return True
     
     def cal_moves2(self):
         '''
@@ -245,13 +244,6 @@ class Board:
                     
                     if not self.squares[r][c].has_piece():
                         self.squares[r][c].is_possible_move = True
-
-    def teleport(self, piece, row, col):
-        '''
-            Put the piece (real piece or corpse) at the new position (row,col) assuming the move is possible
-        '''
-        
-        pass
         
     def move_piece(self, piece, row, col):
         '''

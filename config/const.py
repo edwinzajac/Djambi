@@ -4,8 +4,8 @@ from gettext import install
 import json
 
 
-WIDTH = 630 
-HEIGHT = WIDTH #doit être multiple de 9
+WIDTH = 630
+HEIGHT = WIDTH # Must be a multiple of 9 for prettier game interface
 MARGIN = WIDTH//10
 
 # Board dimensions
