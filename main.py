@@ -6,7 +6,7 @@ import logging
 from config.const import *
 from gameplay.game import Game
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 class Main:
