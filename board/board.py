@@ -10,12 +10,13 @@ class Board:
     
     def __init__(self,player_list, current_square_coord = None):
         self.squares = []
-        self.player_list = player_list  #liste des objets joueurs
+        self.player_list = player_list 
         self.players_nb = len(player_list)
         self._create()
         self._add_pieces()
-        self.current_square_coord = current_square_coord #pour garder en sauvegarde la dernière case cliquée sous forme (row, col)
-        self.clicked_piece = None
+        self.current_square_coord = current_square_coord # in order to save the last clicked square
+        self.clicked_piece = None # in order to save the last clicked piece
+        self.corpse_phase = None # in order to know if we are in the phase just after a piece has been killed and a corpse has to be put (or the killed piece with the Diplomat) 
         
     def _create(self):
         '''
@@ -159,7 +160,7 @@ class Board:
             for c in range(COLS):
                 self.squares[r][c].is_possible_move = False              
     
-    def cal_moves1(self, piece, row, col):
+    def get_possible_moves(self, piece, row, col):
         
         '''
             Renvoie la liste des mouvements possibles en étoile ie dans toutes les directions
@@ -276,18 +277,29 @@ class Board:
                     
                     if self.squares[n_row][n_col].is_possible_move:
                         self.squares[n_row][n_col].piece = Corpse()
+                        logger.debug(f"Corpse positionned at {n_row,n_col}")
                     else:
-                        raise 'Impossible'
-                    
+                        raise "Impossible movement"
+                                            
                 elif piece.name == 'Assassin':
-                    pass
-                
+                        self.squares[prev_row][prev_col].piece = Corpse() 
+                        logger.debug(f"Corpse positionned at {prev_row, prev_col}")
+                        
                 elif piece.name == 'Reporter':
                     pass
                 
                 elif piece.name == 'Diplomat':
                     self.cal_moves2()
-                
+                    
+                    n_row = int(input("Line of the Corpse"))
+                    n_col = int(input("Col of the corpse"))
+                    
+                    if self.squares[n_row][n_col].is_possible_move:
+                        self.squares[n_row][n_col].piece = target_square_piece
+                        logger.debug(f"{target_square_piece.color} {target_square_piece.name} positionned from {row,col} to {n_row,n_col}")
+                    else:
+                        raise "Impossible movement"
+                        
                 elif piece.name == 'Necromobile':
                     self.cal_moves2()
                     
@@ -296,9 +308,10 @@ class Board:
                     
                     if self.squares[n_row][n_col].is_possible_move:
                         self.squares[n_row][n_col].piece = Corpse()
+                        logger.debug(f"Corpse positionned at {n_row,n_col}")
                     else:
-                        raise 'Impossible'
+                        raise "Impossible movement"
+                        
 
-    
 
-    
+       

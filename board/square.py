@@ -1,4 +1,7 @@
 
+from board.piece import Corpse
+
+
 class Square:
     
     def __init__(self, row, col, piece = None, is_possible_move = False):
@@ -12,19 +15,19 @@ class Square:
         
     def has_real_piece(self): # Check if the square has a piece (and not a corpse)
         if self.has_piece():
-            return self.piece.name != 'Corpse'
+            return self.piece.__class__ != Corpse
         return False
     
     def has_corpse(self): # Check if the square has a corpse
         if self.has_piece():
-            return self.piece.name == 'Corpse'
+            return self.piece.__class__ == Corpse
         return False
     
     def has_rival_piece(self,piece):
         '''
             Compare la couleur de la pièce avec celle 
         '''
-        return self.piece.color != piece.color
+        return self.piece.color != piece.color and self.piece.__class__ != Corpse 
          
     
     
