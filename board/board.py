@@ -46,14 +46,14 @@ class Board:
                     color = color1
                 else:
                     color = color2
-                self.squares[0][col] = Square(0,col,Chief( color, (0,col) ) )
-                self.squares[8][col] = Square(8,col,Chief( color, (8,col) ) )
+                self.squares[0][col] = Square(0, col, Chief( color, (0,col) ) )
+                self.squares[8][col] = Square(8, col, Chief( color, (8,col) ) )
                 
-                self.squares[1][col] = Square(1,col,Reporter( color, (1,col) ) )
-                self.squares[7][col] = Square(7,col,Reporter( color, (7,col) ) )
+                self.squares[1][col] = Square(1, col, Reporter( color, (1,col) ) )
+                self.squares[7][col] = Square(7, col, Reporter( color, (7,col) ) )
                 
-                self.squares[2][col] = Square(2,col,Militant( color, (2,col) ) )
-                self.squares[6][col] = Square(6,col,Militant( color, (6,col) ) )
+                self.squares[2][col] = Square(2, col, Militant( color, (2,col) ) )
+                self.squares[6][col] = Square(6, col, Militant( color, (6,col) ) )
             
             ## Ajout des pièces des colonnes 2 et 8
             for col in [1,7]:
@@ -61,14 +61,15 @@ class Board:
                     color = color1
                 else:
                     color = color2
-                self.squares[0][col] = Square(0,col,Assassin( color, (0,col) ) )
-                self.squares[8][col] = Square(8,col,Assassin( color, (8,col) ) )
+                    
+                self.squares[0][col] = Square(0, col, Assassin( color, (0,col) ) )
+                self.squares[8][col] = Square(8, col, Assassin( color, (8,col) ) )
                 
-                self.squares[1][col] = Square(1,col,Diplomat( color, (1,col) ) )
-                self.squares[7][col] = Square(7,col,Diplomat( color, (7,col) ) )
+                self.squares[1][col] = Square(1, col, Diplomat( color, (1,col) ) )
+                self.squares[7][col] = Square(7, col, Diplomat( color, (7,col) ) )
                 
-                self.squares[2][col] = Square(2,col,Militant( color, (2,col) ) )
-                self.squares[6][col] = Square(6,col,Militant( color, (6,col) ) )
+                self.squares[2][col] = Square(2, col, Militant( color, (2,col) ) )
+                self.squares[6][col] = Square(6, col, Militant( color, (6,col) ) )
             
             ## Ajout des pièces des colonnes 3 et 7
             for col in [2,6]:
@@ -76,14 +77,15 @@ class Board:
                     color = color1
                 else:
                     color = color2
-                self.squares[0][col] = Square(0,col,Militant( color, (0,col) ) )
-                self.squares[8][col] = Square(8,col,Militant( color, (8,col) ) )
+                    
+                self.squares[0][col] = Square(0, col, Militant( color, (0,col) ) )
+                self.squares[8][col] = Square(8, col, Militant( color, (8,col) ) )
                 
-                self.squares[1][col] = Square(1,col,Militant( color, (1,col) ) )
-                self.squares[7][col] = Square(7,col,Militant( color, (7,col) ) )
+                self.squares[1][col] = Square(1, col, Militant( color, (1,col) ) )
+                self.squares[7][col] = Square(7, col, Militant( color, (7,col) ) )
                 
-                self.squares[2][col] = Square(2,col,Necromobile( color, (2,col) ) )
-                self.squares[6][col] = Square(6,col,Necromobile( color, (6,col) ) )
+                self.squares[2][col] = Square(2, col, Necromobile( color, (2,col) ) )
+                self.squares[6][col] = Square(6, col, Necromobile( color, (6,col) ) )
         
             
         elif self.players_nb == 4:
@@ -106,11 +108,11 @@ class Board:
                     else:
                         color = color4
                          
-                    self.squares[row][col] = Square(row,col,Chief( color, (row,col) ) ) # row = 0 or 8
+                    self.squares[row][col] = Square(row, col, Chief( color, (row,col) ) ) # row = 0 or 8
                     
-                    self.squares[abs(row-1)][col] = Square(abs(row-1),col,Reporter( color, (abs(row-1),col) ) ) # row 1 or 7
+                    self.squares[abs(row-1)][col] = Square(abs(row-1), col, Reporter( color, (abs(row-1),col) ) ) # row 1 or 7
                     
-                    self.squares[abs(row-2)][col] = Square(abs(row-2),col,Militant( color, (abs(row-2),col) ) ) # row = 2 or 6
+                    self.squares[abs(row-2)][col] = Square(abs(row-2), col, Militant( color, (abs(row-2),col) ) ) # row = 2 or 6
          
         ## Add pieces on colums 2 et 8
             for col in [1,7]:
@@ -125,11 +127,11 @@ class Board:
                     else:
                         color = color4
 
-                    self.squares[row][col] = Square(row,col,Assassin( color, (row,col) ) ) # row = 0 or 8
+                    self.squares[row][col] = Square(row, col, Assassin( color, (row,col) ) ) # row = 0 or 8
                     
-                    self.squares[abs(row-1)][col] = Square(abs(row-1),col,Diplomat( color, (abs(row-1),col) ) ) # row 1 or 7
+                    self.squares[abs(row-1)][col] = Square(abs(row-1), col, Diplomat( color, (abs(row-1),col) ) ) # row 1 or 7
                     
-                    self.squares[abs(row-2)][col] = Square(abs(row-2),col,Militant( color, (abs(row-2),col) ) ) # row = 2 or 6
+                    self.squares[abs(row-2)][col] = Square(abs(row-2), col, Militant( color, (abs(row-2),col) ) ) # row = 2 or 6
         
         ## Add pieces on colums 3 et 7
             for col in [2,6]:
@@ -146,10 +148,11 @@ class Board:
 
                     self.squares[row][col] = Square(row,col,Militant( color, (row,col) ) ) # row = 0 or 8
                     
-                    self.squares[abs(row-1)][col] = Square(abs(row-1),col,Militant( color, (abs(row-1),col) ) ) # row 1 or 7
+                    self.squares[abs(row-1)][col] = Square(abs(row-1), col, Militant( color, (abs(row-1),col) ) ) # row 1 or 7
                     
-                    self.squares[abs(row-2)][col] = Square(abs(row-2),col,Necromobile( color, (abs(row-2),col) ) ) # row = 2 or 6
+                    self.squares[abs(row-2)][col] = Square(abs(row-2), col, Necromobile( color, (abs(row-2),col) ) ) # row = 2 or 6
 
+            logger.debug("Test Corpses added")
             self.squares[5][5] = Square(5,5,Corpse())
             self.squares[1][5] = Square(1,5,Corpse())
 

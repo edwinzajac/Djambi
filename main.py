@@ -49,7 +49,8 @@ class Main:
                     clicked_row = (dragger.mouseY-MARGIN//2)//SQSIZE
                     clicked_col = (dragger.mouseX-MARGIN//2)//SQSIZE
                     
-                    if not board.piece_effect_phase or board.squares[clicked_row][clicked_col].is_possible_move or (clicked_row,clicked_col) == board.current_square_coord : # In that way, on the second phase, the player can only click on the used piece in order to active ability
+                     # In that way, on the second phase, the player can only click on the used piece in order to active ability
+                    if not board.piece_effect_phase or board.squares[clicked_row][clicked_col].is_possible_move or (clicked_row,clicked_col) == board.current_square_coord :
                     
                         board.current_square_coord = (clicked_row,clicked_col)
                         
@@ -59,7 +60,9 @@ class Main:
                             dragger.save_initial(event.pos)
                             dragger.drag_piece(piece)
                             
-                            if board.clicked_piece is None:    # Check if a piece has already been clicked before
+                            # Check if a piece has already been clicked before
+                            if board.clicked_piece is None:    
+                                
                                 # Show moves
                                 board.get_possible_moves(piece,clicked_row,clicked_col)
                                 
@@ -67,6 +70,7 @@ class Main:
                                 board.clicked_piece = piece
                                 
                             else:
+                                
                                 # Piece movement
                                 board.move_piece(board.clicked_piece,clicked_row,clicked_col)
                                 
