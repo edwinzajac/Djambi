@@ -31,7 +31,7 @@ class Piece:
                 f'{self.piecesDirectory}/blank/corpse.svg'
             )
         
-    def add_moves(self,move):
+    def add_moves(self, move):
         self.moves.append(move)
 
     def __str__(self):
@@ -39,49 +39,49 @@ class Piece:
     
 class Militant(Piece):
     
-    def __init__(self,color, initial_pos):
+    def __init__(self, color, initial_pos):
         
        self.dir = -1 if color == 'blanc' else 1
-       super().__init__('Militant',color, 1, initial_pos) 
+       super().__init__(name='Militant', color=color, value=1, initial_pos=initial_pos) 
        self.range=2
        
 class Assassin(Piece):
     
-    def __init__(self,color, initial_pos):
+    def __init__(self, color, initial_pos):
         
         self.dir = -1 if color == 'blanc' else 1
-        super().__init__('Assassin',color, 3, initial_pos) 
+        super().__init__(name='Assassin', color=color, value=3, initial_pos=initial_pos) 
         
 class Reporter(Piece):
     
-    def __init__(self,color, initial_pos):
+    def __init__(self, color, initial_pos):
         
         self.dir = -1 if color == 'blanc' else 1
-        super().__init__('Reporter',color, 5, initial_pos)
+        super().__init__(name='Reporter', color=color, value=5, initial_pos=initial_pos)
         
 class Diplomat(Piece):
     
-    def __init__(self,color, initial_pos):
+    def __init__(self, color, initial_pos):
         
         self.dir = -1 if color == 'blanc' else 1
-        super().__init__('Diplomat',color, 4, initial_pos)
+        super().__init__(name='Diplomat', color=color, value=4, initial_pos=initial_pos)
         
 class Necromobile(Piece):
     
-    def __init__(self,color, initial_pos):
+    def __init__(self, color, initial_pos):
         
         self.dir = -1 if color == 'blanc' else 1
-        super().__init__('Necromobile',color, 9, initial_pos)
+        super().__init__(name='Necromobile', color=color, value=9, initial_pos=initial_pos)
         
 class Chief(Piece):
     
-    def __init__(self,color, initial_pos):
+    def __init__(self, color, initial_pos):
         
         self.dir = -1 if color == 'blanc' else 1
-        super().__init__('Chief',color, 80, initial_pos)
+        super().__init__(name='Chief', color=color, value=80, initial_pos=initial_pos)
 
 class Corpse(Piece):
     
     def __init__(self):
     
-        super().__init__('Corpse', "", 0)
+        super().__init__(name='Corpse', color="", value=0)

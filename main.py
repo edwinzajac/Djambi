@@ -38,7 +38,6 @@ class Main:
             
             game.show_moves(screen)
             
-            
             for event in pygame.event.get():
                 
                 #click
@@ -77,7 +76,7 @@ class Main:
                                 # Reinitialisation of info
                                 board.clicked_piece = None
                                 board.reinitialise_moves()
-                            
+            
     
                         else:
                             # Piece movement
