@@ -166,7 +166,6 @@ class Board:
                 self.squares[r][c].is_possible_move = False              
     
     
-    
     def get_possible_moves(self, piece, row, col):
         
         '''
