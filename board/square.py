@@ -36,6 +36,7 @@ class Square:
         '''
         Vérifie que l'objet Square est bien dans le board
         '''
+        
         for arg in args:
             if arg < 0 or arg > 8:
                 return False

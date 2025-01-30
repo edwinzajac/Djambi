@@ -17,7 +17,7 @@ class Board:
         self.current_square_coord = current_square_coord # in order to save the last clicked square
         self.clicked_piece = None # in order to save the last clicked piece
         
-        self.piece_effect_phase = False # in order to know if we are in the phase just after a piece has been killed and a corpse has to be put (or the killed piece with the Diplomat) 
+        self.first_phase = True # If True, this is the phase where we want to move the selected piece to a new position, If False (the second phase), we want to use the piece effect
         self.target_square_piece = None # in order to save the last moved piece
         
     def _create(self):
@@ -176,7 +176,7 @@ class Board:
         self.reinitialise_moves()
         
         #Calcul des nouveaux possible moves
-        if not self.piece_effect_phase: 
+        if self.first_phase: 
             pos_mov = self.calculate_possible_moves_phase1(piece,(row,col))
         else:
             pos_mov = self.calculate_possible_moves_phase2()
@@ -184,6 +184,27 @@ class Board:
         
         for pos in pos_mov:
             self.squares[pos[0]][pos[1]].is_possible_move = True 
+            
+    def get_neighbor_piece_pos_for_reporter(self, row, col):
+        """Checks up, down, left and right of the position if there is a real piece
+
+        Args:
+            row:row of the square
+            col:col of the square
+        """
+        listOfNeighborPiecesPos = []
+        
+        for incr in [-1, 1]:
+            new_pos1 = row + incr, col
+            new_pos2 = row       , col + incr
+            
+            for new_pos in [new_pos1, new_pos2]:
+                
+                if Square.in_board(new_pos) and self.squares[new_pos[0]][new_pos[1]].has_real_piece():
+                    
+                    listOfNeighborPiecesPos.append(new_pos)
+                    
+        return listOfNeighborPiecesPos
 
     def calculate_possible_moves_phase1(self, piece, pos):
         """Return the list of possible_moves for phase 1 considering the current board
@@ -262,6 +283,34 @@ class Board:
         
         return listOfPossibleMoves
         
+    def first_phase_move(self, piece, row, col):
+          
+        # Checks if it is a possible move
+        if self.squares[row][col].is_possible_move:
+            
+            
+            if self.squares[row][col].has_real_piece(): # Target has a piece
+                
+                # Save the coordinates of the piece before moving the piece
+                self.current_square_coord = (row,col)
+                
+                # Save the piece where the squared is selected
+                self.target_square_piece = self.squares[row][col].piece
+                    
+                # Deleting the piece of its current square
+                prev_row, prev_col = piece.moves[-1]
+                self.squares[prev_row][prev_col].piece = None 
+                
+                # Storing movement data
+                piece.moves.append((row,col))
+                    
+                # Addind the piece to the next square
+                self.squares[row][col].piece = piece
+                logger.info(f"{piece} moved from {prev_row, prev_col} to {row,col}")
+                
+                # That way, the next moment this function is activated, it will move to the second phase                  
+                self.first_phase = False
+                logger.debug("Second phase of the turn")
     
     def move_piece(self, piece, row, col):
         '''
@@ -272,13 +321,103 @@ class Board:
             :col: int - column of the board
         '''
         
-        if not self.piece_effect_phase:
+        # Checks if it is a possible move
+        if self.squares[row][col].is_possible_move:
+        
+            if self.squares[row][col].has_real_piece():
+                
+                # Check the phase of the move
+                if self.first_phase: # First phase
+                    
+                    # Save the coordinates of the piece before moving the piece
+                    self.current_square_coord = (row,col)
+                    
+                    # Save the piece where the squared is selected
+                    self.target_square_piece = self.squares[row][col].piece
+                        
+                    # Deleting the piece of its current square
+                    prev_row, prev_col = piece.moves[-1]
+                    self.squares[prev_row][prev_col].piece = None 
+                    
+                    # Storing movement data
+                    piece.moves.append((row,col))
+                        
+                    # Addind the piece to the next square
+                    self.squares[row][col].piece = piece
+                    logger.info(f"{piece} moved from {prev_row, prev_col} to {row,col}")
+                    
+                    # That way, the next moment this function is activated, it will move to the second phase                  
+                    self.first_phase = False
+                    logger.debug("Second phase of the turn")
+                    
+                else: # Second phase
+                    
+                    if piece.__class__ == Militant or piece.__class__ == Chief:
+        
+                        self.squares[row][col].piece = Corpse()
+                        logger.debug(f"Corpse positionned at {row,col}")
+                    
+                        self.first_phase = True
+                        logger.debug("First phase of the turn")
+                                            
+                    elif piece.__class__== Assassin:
+                        
+                        # Addind a Corpse to the previous Assassin position
+                        prev_row, prev_col = piece.moves[-1]
+                        self.squares[prev_row][prev_row].piece = Corpse() 
+                        logger.debug(f"Corpse positionned at {prev_row, prev_col}")
+                        
+                        self.first_phase = True
+                        logger.debug("First phase of the turn")
+                    
+                    elif piece.__class__ == Diplomat:
+                        
+                        self.squares[row][col].piece = self.target_square_piece
+                        logger.debug(f"{self.target_square_piece.color} {self.target_square_piece.name} positionned from {self.current_square_coord[0],self.current_square_coord[1]} to {row,col}")
+                        
+                        self.first_phase = True
+                        logger.debug("First phase of the turn")
+            
+            elif self.squares[row][col].has_corpse(): # Target has a corpse
+
+                ## Add the other conditions !!!!
+                        
+                if piece.__class__ == Necromobile:
+                    
+                    if self.squares[row][col].is_possible_move:
+                        self.squares[row][col].piece = Corpse()
+                        logger.debug(f"Corpse positionned at {row,col}")
+        
+                        self.first_phase = True
+                        logger.debug("First phase of the turn")
+                        
+            else: # Target has no piece
+                
+                ## SAME
+                                       
+                if piece.__class__ == Reporter:
+                    
+                    # Each neighbor real piece (not corpse) becomes a Corpse
+                    for pos in self.get_neighbor_piece_pos_for_reporter(row, col):
+                        self.squares[pos[0]][pos[1]].piece = Corpse()
+                        logger.debug(f"Corpse positionned at {pos[0], pos[1]}")
+                        
+        
+        else: # Move not possible
+            logger.debug(f"Not possible move for {piece} to {row, col} in move_piece")
+            
+            ## COMPLETE
+        
+        #______
+        
+        
+        if self.first_phase:
             if self.squares[row][col].is_possible_move:
                 
                 if self.squares[row][col].has_piece():
                     
                     # In that way, the next moment this function is activated, it will move to the second phase                  
-                    self.piece_effect_phase = True
+                    self.first_phase = False
                     logger.debug("Second phase of the turn")
                     
                     # Save the coordinates of the piece before moving the piece
@@ -302,18 +441,15 @@ class Board:
                      
                      
         # Piece's effect if target square contains a piece
-        else:
-            try:
-                print("PIECE NAME IS",piece.name)
-            except:
-                pass
+        if not self.first_phase:
+            
             if piece.__class__ == Militant or piece.__class__ == Chief:
             
                 if self.squares[row][col].is_possible_move:
                     self.squares[row][col].piece = Corpse()
                     logger.debug(f"Corpse positionned at {row,col}")
                 
-                    self.piece_effect_phase = False
+                    self.first_phase = True
                     logger.debug("First phase of the turn")
                                     
             elif piece.__class__== Assassin:
@@ -321,7 +457,7 @@ class Board:
                 self.squares[row][col].piece = Corpse() 
                 logger.debug(f"Corpse positionned at {self.current_square_coord[0], self.current_square_coord[1]}")
                 
-                self.piece_effect_phase = False
+                self.first_phase = True
                 logger.debug("First phase of the turn")
                 
             elif piece.__class__ == Reporter:
@@ -333,7 +469,7 @@ class Board:
                     self.squares[row][col].piece = self.target_square_piece
                     logger.debug(f"{self.target_square_piece.color} {self.target_square_piece.name} positionned from {self.current_square_coord[0],self.current_square_coord[1]} to {row,col}")
                     
-                    self.piece_effect_phase = False
+                    self.first_phase = True
                     logger.debug("First phase of the turn")
                     
             elif piece.__class__ == Necromobile:
@@ -342,6 +478,6 @@ class Board:
                     self.squares[row][col].piece = Corpse()
                     logger.debug(f"Corpse positionned at {row,col}")
     
-                    self.piece_effect_phase = False
+                    self.first_phase = True
                     logger.debug("First phase of the turn")
     

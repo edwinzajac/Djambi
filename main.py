@@ -42,15 +42,39 @@ class Main:
                 
                 #click
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    logger.info(f"EVENT: MOUSEBUTTONDOWN")
+                    logger.info("EVENT: MOUSEBUTTONDOWN")
                     dragger.update_mouse(event.pos)
                     
                     clicked_row = (dragger.mouseY-MARGIN//2)//SQSIZE
                     clicked_col = (dragger.mouseX-MARGIN//2)//SQSIZE
                     
-                     # In that way, on the second phase, the player can only click on the used piece in order to active ability
-                    if not board.piece_effect_phase or board.squares[clicked_row][clicked_col].is_possible_move or (clicked_row,clicked_col) == board.current_square_coord :
                     
+                    has_piece = board.squares[clicked_row][clicked_col].has_real_piece()
+                    is_dragging_a_piece = dragger.dragging
+                    
+                    # Either it is a piece and no piece has been clicked just before
+                    if has_piece and not is_dragging_a_piece:
+                        piece = board.squares[clicked_row][clicked_col].piece
+                        logger.info(f"Piece clicked: {piece}")
+                        
+                        dragger.save_initial(event.pos)
+                        dragger.drag_piece(piece)
+                        
+                        board.get_possible_moves(piece, clicked_row, clicked_col)
+                        
+                    if is_dragging_a_piece:
+                        piece = board.squares[clicked_row][clicked_col].piece
+                        logger.info(f"Piece clicked: {piece}")
+                        
+                        board.move_piece(board.clicked_piece, clicked_row, clicked_col)
+                    
+                     # Second phase: During this phase, the player can only click on the piece that has already been used.
+                    first_phase = board.first_phase # if false, this is the second phase
+                    is_possible_move = board.squares[clicked_row][clicked_col].is_possible_move
+                    is_current_square = (clicked_row, clicked_col) == board.current_square_coord
+                    
+                    if not first_phase or is_possible_move or is_current_square:
+                        
                         board.current_square_coord = (clicked_row,clicked_col)
                         
                         if board.squares[clicked_row][clicked_col].has_real_piece():
@@ -84,7 +108,7 @@ class Main:
                             
                             # Reinitialisation of info
                             board.clicked_piece = None
-                            board.reinitialise_moves()
+                    logger.info("EVENT: MOUSEBUTTONUP")
                         
                 # click release
                 elif event.type == pygame.MOUSEBUTTONUP:
@@ -109,7 +133,7 @@ class Main:
             
             pygame.display.update()
             
-            time.sleep(0.01) # Slower the framerate
+            time.sleep(0.05) # Slower the framerate (20FPS)
             
 
 main = Main()

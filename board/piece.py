@@ -43,7 +43,7 @@ class Militant(Piece):
         
        self.dir = -1 if color == 'blanc' else 1
        super().__init__(name='Militant', color=color, value=1, initial_pos=initial_pos) 
-       self.range=2
+       self.range = 2
        
 class Assassin(Piece):
     
