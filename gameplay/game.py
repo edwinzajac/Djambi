@@ -36,7 +36,7 @@ class Game:
                 else:
                     color = SECONDARY_CHECKERBOARD_COLOR 
                     
-                if self.board.current_square_coord is not None and self.board.current_square_coord == (row,col): #on surligne la case cliquée        
+                if self.board.current_square_coord is not None and self.board.current_square_coord == (row,col): # on surligne la case cliquée        
                     color = (255,160,160)
                 
                 rect = ( col*SQSIZE + MARGIN//2 , row * SQSIZE + MARGIN//2 , SQSIZE, SQSIZE )
