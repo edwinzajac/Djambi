@@ -133,8 +133,14 @@ main.mainloop()
 ##############################################################################################################
 
 ### AJOUTER :
-# - Un système de tour par tour
-# - Bonus de l'héritier
+# - Un système de tour par tour (avec un bouton "Fin de tour")
+# - Ajouter le retour en arrière
+# - Bonus de l'héritier et possibilité de le manger avec des pièces autres que le militant
 # - Test de victoire en fonction des cadavres
+# - Changement des couleurs des pièces quand l'héritier est mort
 # - Fonctionnalité IA
+# - Ajouter des sons ?
+# - Sur serveur
+
+
 
