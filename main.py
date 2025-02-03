@@ -135,7 +135,7 @@ main.mainloop()
 ### AJOUTER :
 # - Un système de tour par tour (avec un bouton "Fin de tour")
 # - Ajouter le retour en arrière
-# - Bonus de l'héritier et possibilité de le manger avec des pièces autres que le militant
+# - Bonus de l'héritier et possibilité de le manger avec des pièces autres que le militant (+ coup supplémentaire pour la pièce pour quitter éventuellement la place centrale)
 # - Test de victoire en fonction des cadavres + création de l'attribut zombie -> cf (https://fr.wikipedia.org/wiki/Djambi -> But du jeu / Mort par encerclement)
 # - Changement des couleurs des pièces quand l'héritier est mort
 # - Fonctionnalité IA
