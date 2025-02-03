@@ -282,8 +282,7 @@ class Board:
                         listOfPossibleMoves.append((r,c))        
         
         return listOfPossibleMoves
-    
-    
+
     def first_phase_move(self, piece, row, col):
         """ Move the piece to the selected position in the first phase of the turn
 
@@ -351,7 +350,6 @@ class Board:
         else: # Move not possible
             
             logger.debug(f"Not possible move for {piece} to {row, col} in first_phase_move")
-            
 
     def second_phase_move(self, piece, row, col):
         """ Move the piece to the selected position in the second phase of the turn
@@ -397,7 +395,6 @@ class Board:
         self.first_phase = True           
         logger.debug("First phase of the turn (new turn)")
     
-    
     def move_piece(self, piece, row, col):
         '''
         Do a turn of the game by moving the piece from its position to (row,col) when it is a possible move depending on the current turn phase
@@ -414,3 +411,13 @@ class Board:
         else:
             
             self.second_phase_move(piece, row, col)
+
+    def check_emprisonment(self):
+        '''
+            Check if the Chiefs are emprisonned
+        '''
+        
+        for player in self.player_list:
+            if self.is_chief_emprisonned(player):
+                return True
+        return False
