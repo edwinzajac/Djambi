@@ -74,9 +74,10 @@ class Main:
                         
                         # Move the piece, get the possible moves for next turn, then reinitialise the clicked piece
                         board.move_piece(board.clicked_piece, clicked_row, clicked_col)
-                        board.get_possible_moves(piece, clicked_row, clicked_col)
                         
                         board.clicked_piece = None
+                        
+                        board.reinitialise_moves()
                     
                     elif not square_has_piece and has_clicked_piece: # It is not a piece and a piece is being dragged
                         
@@ -84,14 +85,18 @@ class Main:
                         
                         # Move the piece, get the possible moves for next turn, then reinitialise the clicked piece
                         board.move_piece(board.clicked_piece, clicked_row, clicked_col)
-                        board.get_possible_moves(board.clicked_piece, clicked_row, clicked_col)
                         
                         board.clicked_piece = None
+
+                        board.reinitialise_moves()
                         
                     else: # It is not a piece and no piece is being dragged
                         
                         logger.info("No piece clicked in main loop, condition 4")  
-           
+                        
+                        board.clicked_piece = None
+
+                        board.reinitialise_moves()
 
                 # click release
                 elif event.type == pygame.MOUSEBUTTONUP:
@@ -124,45 +129,12 @@ class Main:
 main = Main()
 main.mainloop()
 
-'''
-                     # Second phase: During this phase, the player can only click on the piece that has already been used.
-                    first_phase = board.first_phase # if false, this is the second phase
-                    is_possible_move = board.squares[clicked_row][clicked_col].is_possible_move
-                    is_current_square = (clicked_row, clicked_col) == board.current_square_coord
-                    
-                    if not first_phase or is_possible_move or is_current_square:
-                        
-                        board.current_square_coord = (clicked_row,clicked_col)
-                        
-                        if board.squares[clicked_row][clicked_col].has_real_piece():
-                            piece = board.squares[clicked_row][clicked_col].piece
-                            
-                            dragger.save_initial(event.pos)
-                            dragger.drag_piece(piece)
-                            
-                            # Check if a piece has already been clicked before
-                            if board.clicked_piece is None:    
-                                
-                                # Show moves
-                                board.get_possible_moves(piece,clicked_row,clicked_col)
-                                
-                                # Save the last clicked piece
-                                board.clicked_piece = piece
-                                
-                            else:
-                                
-                                # Piece movement
-                                board.move_piece(board.clicked_piece,clicked_row,clicked_col)
-                                
-                                # Reinitialisation of info
-                                board.clicked_piece = None
-                                board.reinitialise_moves()
-            
-    
-                        else:
-                            # Piece movement
-                            board.move_piece(board.clicked_piece,clicked_row,clicked_col)
-                            
-                            # Reinitialisation of info
-                            board.clicked_piece = None
-'''
+
+##############################################################################################################
+
+### AJOUTER :
+# - Un système de tour par tour
+# - Bonus de l'héritier
+# - Test de victoire en fonction des cadavres
+# - Fonctionnalité IA
+
