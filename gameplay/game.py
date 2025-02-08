@@ -11,10 +11,10 @@ logger = logging.getLogger(__name__)
 class Game:
 
     def __init__(self):
-        player1 = Player("Edwin", "purple")
-        player2 = Player("Arthur", "red")
-        player3 = Player("Xavier", "yellow")
-        player4 = Player("Un random", "blue")
+        player1 = Player("Edwin", "purple", 0)
+        player2 = Player("Arthur", "red", 1)
+        player3 = Player("Xavier", "yellow", 2)
+        player4 = Player("Un random", "blue", 3)
         player_list = [player1,player2,player3,player4]
         
         self.board = Board(player_list)
