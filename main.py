@@ -147,6 +147,6 @@ main.mainloop()
 # - Faire l'adaptation à 2, 3, 5 et 6 joueurs
 # - Ajouter des sons ?
 # - Sur serveur
-
+# - Conteneurisation
 
 
