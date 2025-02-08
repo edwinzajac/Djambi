@@ -23,7 +23,7 @@ class Game:
         logger.info(f"Game Created")
 
    
-    def show_bg(self,surface):
+    def show_bg(self, surface):
         '''
             Show the background, including all the squares and the trone      
         '''
@@ -52,7 +52,7 @@ class Game:
         surface.blit(img,img_rect)
                
 
-    def show_pieces(self,surface):
+    def show_pieces(self, surface):
         '''
             Showing pieces on the board after having loaded the textures of the pieces from images
         '''

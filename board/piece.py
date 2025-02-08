@@ -6,7 +6,7 @@ logger = logging.getLogger(__name__)
 class Piece:
 
     #piecesDirectory = "./images/pieces"
-    piecesDirectory = "./assets/pieces"
+    piecesDirectory = "./assets/images/pieces"
     
     def __init__(self, name, color, value, initial_pos = None, texture = None, texture_rect = None):
         self.name = name
