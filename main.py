@@ -1,7 +1,7 @@
-import sys
 import pygame
 import time
 import logging
+import numpy as np
 
 from config.const import *
 from gameplay.game import Game
@@ -15,20 +15,23 @@ class Main:
         pygame.init()
         self.screen = pygame.display.set_mode((WIDTH+MARGIN, HEIGHT+MARGIN))
         self.screen.fill(BG_COLOR)
-        pygame.display.set_caption('DJAMBI LES BONOBOS')
+        pygame.display.set_caption('DJAMBIIIIITITOO')
         self.game = Game()
 
     def mainloop(self):
+        
+        running = True
+        
+        # For keeping the same framerate
+        clock = pygame.time.Clock()
         
         game = self.game
         board = self.game.board
         screen = self.screen
         dragger = self.game.dragger
         
-        if dragger.dragging:
-            dragger.update_blit(screen)
         
-        while True:
+        while running:
             
             game.show_bg(screen)
             
@@ -38,8 +41,14 @@ class Main:
             
             for event in pygame.event.get():
                 
+                # Quit the gamme
+                if event.type == pygame.QUIT:
+                    logger.info("End of Game")
+                    running = False
+                    break
+                
                 # click
-                if event.type == pygame.MOUSEBUTTONDOWN:
+                elif event.type == pygame.MOUSEBUTTONDOWN:
                     logger.info("EVENT: MOUSEBUTTONDOWN")
                     dragger.update_mouse(event.pos)
                     
@@ -113,17 +122,13 @@ class Main:
                         game.show_bg(screen)
                         game.show_pieces(screen)
                         dragger.update_blit(screen)
-                
-                
-                if event.type == pygame.QUIT:
-                    logger.info("End of Game")
-                    pygame.quit()
-                    sys.exit()
-
+                        
+                else:
+                    print(pygame.event.event_name(event.type))
             
             pygame.display.update()
-            
-            time.sleep(0.05) # Slower the framerate (20FPS)
+            clock.tick(60)  # Keep it to 60 FPS
+            #print(clock.get_fps())
             
 
 main = Main()

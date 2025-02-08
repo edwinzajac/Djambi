@@ -56,17 +56,36 @@ class Game:
         '''
             Showing pieces on the board after having loaded the textures of the pieces from images
         '''
+        
+        dragged_piece = None
+        
         for row in range(ROWS):
             for col in range(COLS):
+                
                 if self.board.squares[row][col].has_piece():
+                    
                     piece = self.board.squares[row][col].piece
+                    
                     if piece is not self.dragger.piece:
+                        
                         img = pygame.image.load(piece.texture)
-                        img = pygame.transform.smoothscale(img,(SQSIZE*0.9,SQSIZE*0.9))
+                        img = pygame.transform.smoothscale(img, (SQSIZE,SQSIZE))
                         img_center = col * SQSIZE + SQSIZE//2 + MARGIN//2, row * SQSIZE + SQSIZE//2 + MARGIN//2
                         piece.texture_rect = img.get_rect(center = img_center)
-                        surface.blit(img,piece.texture_rect)
+                        surface.blit(img, piece.texture_rect)
+                    
+                    else:
                         
+                        # We draw this piece only in the end
+                        dragged_piece = piece
+                   
+        if dragged_piece is not None:   
+            img = pygame.image.load(dragged_piece.texture)
+            img = pygame.transform.smoothscale(img, (SQSIZE,SQSIZE))
+            img_center = self.dragger.mouseX, self.dragger.mouseY
+            dragged_piece.texture_rect = img.get_rect(center = img_center)
+            surface.blit(img, dragged_piece.texture_rect)
+    
     def show_moves(self,surface):
         '''
             Show possible moves thanks to Square's attribute "is_possible_move"
