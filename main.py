@@ -124,7 +124,8 @@ class Main:
                         dragger.update_blit(screen)
                         
                 else:
-                    print(pygame.event.event_name(event.type))
+                    pass
+                    #print(pygame.event.event_name(event.type))
             
             pygame.display.update()
             clock.tick(60)  # Keep it to 60 FPS
@@ -138,6 +139,7 @@ main.mainloop()
 ##############################################################################################################
 
 ### AJOUTER :
+
 # - Un système de tour par tour (avec un bouton "Fin de tour")
 # - Ajouter le retour en arrière
 # - Bonus de l'héritier et possibilité de le manger avec des pièces autres que le militant (+ coup supplémentaire pour la pièce pour quitter éventuellement la place centrale)

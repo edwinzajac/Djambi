@@ -362,38 +362,34 @@ class Board:
         
         # The second phase depends of the piece
         
-        if piece.__class__ == Militant or piece.__class__ == Chief or piece.__class__ == Necromobile:
+        if self.squares[row][col].is_possible_move:
+            
+            if piece.__class__ == Militant or piece.__class__ == Chief or piece.__class__ == Necromobile:
         
-            if self.squares[row][col].is_possible_move:
-                
                 # Add a Corpse to the target square
                 self.squares[row][col].piece = Corpse()
                 logger.debug(f"Corpse positionned at {row,col} for {piece.color} {piece.name}")
+                
             
-            else:
-                
-                logger.debug(f"Not possible move for {piece} to {row, col} in second_phase_move")
-        
-        elif piece.__class__ == Diplomat:
-                
-            if self.squares[row][col].is_possible_move:
+            elif piece.__class__ == Diplomat:
                 
                 self.squares[row][col].piece = self.target_square_piece
                 logger.debug(f"{self.target_square_piece.color} {self.target_square_piece.name} positionned from {self.current_square_coord[0],self.current_square_coord[1]} to {row,col}")
-
+                
             else:
                 
-                logger.debug(f"Not possible move for {piece} to {row, col} in second_phase_move")
+                logger.debug(f"Error in piece choice {piece} in second_phase_move")
                 
+                
+            # That way, the next moment this function is activated, it will move to the first phase (next turn)                  
+            self.first_phase = True           
+            logger.debug("First phase of the turn (new turn)")
+
         else:
             
             logger.debug(f"Not possible move for {piece} to {row, col} in second_phase_move")
-            
-            ## The moves of the Assassin and Reporter take place in the first phase
                 
-        # That way, the next moment this function is activated, it will move to the first phase (next turn)                  
-        self.first_phase = True           
-        logger.debug("First phase of the turn (new turn)")
+
     
     def move_piece(self, piece, row, col):
         '''
@@ -420,4 +416,5 @@ class Board:
         for player in self.player_list:
             if self.is_chief_emprisonned(player):
                 return True
+
         return False
